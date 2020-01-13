@@ -1,0 +1,87 @@
+# -*- coding: utf-8 -*-
+
+from .abc.sub_module_parameter import SubModuleParameter
+from ...validator.validator import Validator
+from ..sub_module_parameter.value.must_value import MustValue
+from ..sub_module_parameter.value.option_value import OptionValue
+
+
+class PostgreSQLCopyFromParameter(SubModuleParameter):
+
+    def __init__(self, params=None):
+        self._postgresql_component_key = None
+        self._table_name = None
+        self._csv_file_name = None
+        self._delimiter = None
+        self._null_str = None
+        self._header = None
+        self._quote = None
+        self._escape = None
+        super().__init__(params)
+
+    @property
+    def postgresql_component_key(self):
+        return self._postgresql_component_key
+
+    @postgresql_component_key.setter
+    @Validator.component_key
+    def postgresql_component_key(self, v):
+        self._postgresql_component_key = MustValue(v)
+
+    @property
+    def table_name(self):
+        return self._table_name
+
+    @table_name.setter
+    def table_name(self, v):
+        self._table_name = MustValue(v)
+
+    @property
+    def csv_file_name(self):
+        return self._csv_file_name
+
+    @csv_file_name.setter
+    @Validator.path
+    def csv_file_name(self, v):
+        self._csv_file_name = MustValue(v)
+
+    @property
+    def delimiter(self):
+        return self._delimiter
+
+    @delimiter.setter
+    def delimiter(self, v):
+        self._delimiter = OptionValue(v, default=',')
+
+    @property
+    def null_str(self):
+        return self._null_str
+
+    @null_str.setter
+    def null_str(self, v):
+        self._null_str = OptionValue(v)
+
+    @property
+    def header(self):
+        return self._header
+
+    @header.setter
+    @Validator.boolean
+    def header(self, v):
+        self._header = OptionValue(v, default=True)
+
+    @property
+    def quote(self):
+        return self._quote
+
+    @quote.setter
+    def quote(self, v):
+        self._quote = OptionValue(v, default='"')
+
+    @property
+    def escape(self):
+        return self._escape
+
+    @escape.setter
+    def escape(self, v):
+        self._escape = OptionValue(v, default='"')

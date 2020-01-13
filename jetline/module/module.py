@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+
+import logging
+from ..parser.kicker_args_parser import KickerArgsParser
+from ..util.yaml_util import YamlUtil
+from ..share_parameter.share_parameter import ShareParameter
+from ..module.sub_module.result.sub_module_result import SubModuleResult
+from ..module.sub_module.sub_module_creator import SubModuleCreator
+from ..config.config import Config
+
+logger = logging.getLogger('jetline')
+
+
+class Module(object):
+
+    KEY_SUB_MODULE = 'sub_module'
+    KEY_SUB_MODULE_NAME = 'name'
+    KEY_SUB_MODULE_PARAM = 'param'
+    KEY_SUB_MODULE_MODE = 'mode'
+
+    def __init__(self, exec_yaml_path: str, exec_date: str):
+        self._exec_yaml_path = exec_yaml_path
+        self._exec_yaml = YamlUtil.load_file(exec_yaml_path)
+        self._exec_date = exec_date
+        self._sub_module_obj_list = []
+
+    def set_up(self):
+        ShareParameter.sub_module_result = SubModuleResult()
+        ShareParameter.exec_yaml = self._exec_yaml
+        ShareParameter.exec_yaml_path = self._exec_yaml_path
+        ShareParameter.exec_date = self._exec_date
+        sub_module_list = self._exec_yaml[self.KEY_SUB_MODULE]
+        for sub_module in sub_module_list:
+            sub_module_name = sub_module[self.KEY_SUB_MODULE_NAME]
+            if sub_module_name in Config.AVAILABLE_SUB_MODULE:
+                sub_module_obj_list = \
+                    SubModuleCreator.create_sub_module_list(
+                        sub_module_name,
+                        sub_module[self.KEY_SUB_MODULE_PARAM],
+                        sub_module[self.KEY_SUB_MODULE_MODE]
+                    )
+                if len(sub_module_obj_list) == 0:
+                    raise Exception('sub_module failed: ' + sub_module_name)
+                else:
+                    for sub_module_obj in sub_module_obj_list:
+                        self._sub_module_obj_list.append(sub_module_obj)
+            else:
+                raise Exception(
+                    'this sub_module using is forbidden : ' + sub_module_name
+                )
+
+    def execute(self):
+        for sub_module_obj in self._sub_module_obj_list:
+            sub_module_obj.execute()
+
+    def tear_down(self):
+        pass
+
+    @classmethod
+    def parse_kick_args(cls, argv):
+        k = KickerArgsParser(argv)
+        ShareParameter.dry_run_mode = k.dry_run()
+        return k.exec_yaml(), k.exec_date()

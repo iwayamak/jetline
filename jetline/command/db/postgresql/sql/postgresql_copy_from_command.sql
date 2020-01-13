@@ -1,0 +1,1 @@
+\copy {{schema}}.{{table_name}} from '{{csv_file_name}}' delimiter e'{{delimiter}}' {{-' null \'' ~ null_str ~ '\'' if null_str != none}} csv {{-' header' if header}} quote '{{quote}}' escape '{{escape}}'

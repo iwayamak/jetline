@@ -1,0 +1,4 @@
+name: test_write_file
+value:
+- param1: value1
+- param2: value2
