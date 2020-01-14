@@ -5,6 +5,7 @@ class Config(object):
     AVAILABLE_SUB_MODULE = (
         'PostgreSQLProcessing',
         'PostgreSQLCopyFrom',
+        'PostgreSQLCopyTo',
         'Plugin'
     )
 

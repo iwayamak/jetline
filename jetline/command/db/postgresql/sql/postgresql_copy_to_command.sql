@@ -1,0 +1,1 @@
+\copy ({{sql_str}}) to '{{csv_file_name}}' delimiter e'{{delimiter}}' {{-' null \'' ~ null_str ~ '\'' if null_str != none}} csv {{-' header' if header}} quote '{{quote}}' escape '{{escape}}' {{-' force quote ' ~ force_quote if force_quote != none}}

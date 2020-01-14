@@ -90,6 +90,10 @@ class TestModule(BaseTestCase):
         exit_code = self._test_sub_module_run('test_postgresql_copy_from.yaml')
         self.assertEqual(0, exit_code)
 
+    def test_postgresql_copy_to_run(self):
+        exit_code = self._test_sub_module_run('test_postgresql_copy_to.yaml')
+        self.assertEqual(0, exit_code)
+
     def test_mysql_processing_dry_run(self):
         exit_code = self._test_sub_module_run('test_postgresql_processing.yaml', True)
         self.assertEqual(0, exit_code)

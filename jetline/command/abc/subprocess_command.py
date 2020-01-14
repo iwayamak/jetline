@@ -3,6 +3,7 @@
 import logging
 import subprocess
 from abc import ABCMeta
+from typing import Union
 from ..abc.command import Command
 from ...container.component.abc.component import Component
 
@@ -11,7 +12,7 @@ logger = logging.getLogger('jetline')
 
 class SubprocessCommand(Command, metaclass=ABCMeta):
 
-    def __init__(self, component: Component,
+    def __init__(self, component: Union[Component, None],
                  cmd: list, check: bool = True, cwd: str = None, env: dict = None,
                  timeout: int = 43200):
         self._cmd = cmd

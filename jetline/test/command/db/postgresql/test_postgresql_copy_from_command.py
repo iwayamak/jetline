@@ -49,7 +49,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         queue.execute()
 
-    def test_copy_dry_run(self):
+    def test_copy_from_dry_run(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = True
@@ -67,7 +67,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         command.execute()
 
-    def test_copy(self):
+    def test_copy_from(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
@@ -85,7 +85,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         command.execute()
 
-    def test_copy_tsv(self):
+    def test_copy_from_tsv(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
@@ -103,7 +103,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         command.execute()
 
-    def test_copy_no_header(self):
+    def test_copy_from_no_header(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
@@ -121,7 +121,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         command.execute()
 
-    def test_copy_set_null_str(self):
+    def test_copy_from_set_null_str(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
@@ -139,7 +139,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         command.execute()
 
-    def test_copy_pip_delim(self):
+    def test_copy_from_pip_delim(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
@@ -157,7 +157,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         command.execute()
 
-    def test_copy_no_quote(self):
+    def test_copy_from_o_quote(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
