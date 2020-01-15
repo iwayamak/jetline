@@ -27,8 +27,6 @@ class DbCommand(Command, metaclass=ABCMeta):
         super().run()
         self._cursor = self._connection.cursor()
         logger.info(f'Performing queries\n{self._mask_password()}')
-        self._cursor.execute(self._query)
-        self._connection.commit()
 
     def dry_run(self):
         super().dry_run()

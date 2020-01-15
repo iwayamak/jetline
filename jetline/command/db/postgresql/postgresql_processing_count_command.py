@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from abc import ABC
 
 from .abc.postgresql_command import PostgreSQLCommand
 from ....container.component.postgresql_component import PostgreSQLComponent
@@ -10,7 +9,7 @@ from ....exception.command_error import CommandError
 logger = logging.getLogger('jetline')
 
 
-class PostgreSQLProcessingCountCommand(PostgreSQLCommand, ABC):
+class PostgreSQLProcessingCountCommand(PostgreSQLCommand):
 
     def __init__(self,
                  component: PostgreSQLComponent,
@@ -30,6 +29,8 @@ class PostgreSQLProcessingCountCommand(PostgreSQLCommand, ABC):
 
     def run(self):
         super().run()
+        self._cursor.execute(self._query)
+        self._connection.commit()
         if self._cursor.rowcount != 1:
             raise CommandError(
                 return_code=f'row_count: {self._cursor.rowcount}',

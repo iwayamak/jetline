@@ -157,7 +157,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         )
         command.execute()
 
-    def test_copy_from_o_quote(self):
+    def test_copy_from_no_quote(self):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False

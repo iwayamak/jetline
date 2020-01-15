@@ -29,4 +29,4 @@ class PostgreSQLCommand(DbCommand):
         return self._sql_str
 
     def _mask_password(self):
-        return self._sql_str
+        return self._sql_str.replace('\t', '\\t')

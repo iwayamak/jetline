@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-import logging
 from typing import Union
 from jinja2 import Environment, FileSystemLoader
-from .abc.psql_command import PsqlCommand
+from .abc.postgresql_command import PostgreSQLCommand
 from ....container.component.postgresql_component import PostgreSQLComponent
 
-logger = logging.getLogger('jetline')
 
-
-class PostgreSQLCopyFromCommand(PsqlCommand):
+class PostgreSQLCopyFromCommand(PostgreSQLCommand):
 
     def __init__(self,
                  component: PostgreSQLComponent,
@@ -21,28 +18,30 @@ class PostgreSQLCopyFromCommand(PsqlCommand):
                  header: bool,
                  quote: str,
                  escape: str):
-        self._exec_command = None
-        env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), 'sql')))
-        os.environ['PGPASSWORD'] = component.password
-        template = env.get_template(
-            os.path.splitext(os.path.basename(__file__))[0] + '.sql'
-        )
-        data = {
+        self._data = {
             'schema': component.schema,
             'table_name': table_name,
-            'csv_file_name': csv_file_name,
             'delimiter': delimiter,
             'null_str': null_str,
             'header': header,
             'quote': quote,
             'escape': escape
         }
-        command_str = template.render(data)
-        super().__init__(component, command_str)
+        self._csv_file_name = csv_file_name
+        super().__init__(component)
 
     def set_up(self):
-        super().set_up()
+        env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), 'sql')))
+        template = env.get_template(
+            os.path.splitext(os.path.basename(__file__))[0] + '.sql'
+        )
+        self._sql_str = template.render(self._data)
 
-    def dry_run(self):
-        super().dry_run()
-        logger.info(self._exec_command)
+    def run(self):
+        super().run()
+        with open(self._csv_file_name, mode='r', encoding='utf8') as file:
+            self._cursor.copy_expert(
+                self._sql_str,
+                file
+            )
+        self._connection.commit()
