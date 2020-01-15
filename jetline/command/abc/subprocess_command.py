@@ -32,7 +32,7 @@ class SubprocessCommand(Command, metaclass=ABCMeta):
 
     def run(self):
         super().run()
-        logger.info('command: {0}'.format(' '.join(self._cmd)))
+        logger.info(f'command: {" ".join(self._cmd)}')
         if self._check:
             try:
                 self._stdout = \
@@ -45,7 +45,8 @@ class SubprocessCommand(Command, metaclass=ABCMeta):
                     )
             except subprocess.CalledProcessError as e:
                 logger.error(
-                    'subprocess error. return code:{0}, output:{1}'.format(e.returncode, e.output.decode('utf-8')))
+                    f'subprocess error. return code:{e.returncode}, output:{e.output.decode("utf-8")}'
+                )
                 raise e
             self._return_code = 0
         else:
@@ -59,11 +60,11 @@ class SubprocessCommand(Command, metaclass=ABCMeta):
                 )
             (self._stdout, stderr) = ps.communicate(timeout=self._timeout)
             self._return_code = ps.returncode
-        logger.info('subprocess return code: {0}'.format(self._return_code))
+        logger.info(f'subprocess return code: {self._return_code}')
 
     def dry_run(self):
         super().dry_run()
-        logger.info('command: {0}'.format(' '.join(self._cmd)))
+        logger.info(f'command: {" ".join(self._cmd)}')
 
     def tear_down(self):
         super().tear_down()

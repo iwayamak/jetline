@@ -17,7 +17,7 @@ class Plugin(SubModule):
 
     def run(self):
         plugin_path = self._parameter.plugin_path.get()
-        logger.info('plugin_path: {0}'.format(plugin_path))
+        logger.info(f'plugin_path: {plugin_path}')
         sys.path.append(plugin_path)
         package = self._parameter.package.get()
         class_name = self._parameter.class_name.get()

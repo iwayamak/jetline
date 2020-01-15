@@ -36,7 +36,7 @@ class FileUtil(object):
             html_table += '<tr>'
             tab_list = tsv_line.split('\t')
             for tab in tab_list:
-                html_table += '<td>{tab}</td>'.format(tab=tab)
+                html_table += f'<td>{tab}</td>'
             html_table += '</tr>'
         html_table += '</table>'
         return html_table

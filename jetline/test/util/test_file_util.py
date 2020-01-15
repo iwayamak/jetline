@@ -12,7 +12,6 @@ class TestFileUtil(unittest.TestCase):
                 'test_file_util.txt'
             )
         file = FileUtil.file_to_str(filename)
-        print(file)
         self.assertEqual(file, 'text_file_util用テストファイル')
 
     def test_str_to_file(self):

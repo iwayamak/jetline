@@ -26,13 +26,13 @@ class DbCommand(Command, metaclass=ABCMeta):
     def run(self):
         super().run()
         self._cursor = self._connection.cursor()
-        logger.info('Performing queries\n{0}'.format(self._mask_password()))
+        logger.info(f'Performing queries\n{self._mask_password()}')
         self._cursor.execute(self._query)
         self._connection.commit()
 
     def dry_run(self):
         super().dry_run()
-        logger.info('Dry run queries\n{0}'.format(self._mask_password()))
+        logger.info(f'Dry run queries\n{self._mask_password()}')
 
     def tear_down(self):
         if self._cursor is not None:

@@ -94,9 +94,9 @@ class Validator(object):
                     return func(*args, **kwargs)
                 try:
                     if v < lower or v > upper:
-                        raise SubModuleParameterError('range [{0}] to [{1}]'.format(lower, upper), v)
+                        raise SubModuleParameterError(f'range [{lower}] to [{upper}]', v)
                 except TypeError:
-                    raise SubModuleParameterError('range [{0}] to [{1}]'.format(lower, upper), v)
+                    raise SubModuleParameterError(f'range [{lower}] to [{upper}]', v)
                 return func(*args, **kwargs)
             return wrapper
         return _regexp

@@ -24,13 +24,13 @@ class BuiltInCommand(Command, metaclass=ABCMeta):
 
     def run(self):
         logger.info(
-            'instance_name: ' + str(self._instance_name) + '  attr_name: ' + str(self._attr_name)
+            f'instance_name: {self._instance_name}  attr_name: {str(self._attr_name)}'
         )
         self._run_obj_attr()
 
     def dry_run(self):
         logger.info(
-            'instance_name: ' + str(self._instance_name) + '  attr_name: ' + str(self._attr_name)
+            f'instance_name: {str(self._instance_name)}  attr_name: {str(self._attr_name)}'
         )
 
     def tear_down(self):

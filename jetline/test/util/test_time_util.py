@@ -9,11 +9,9 @@ class TestTimeUtil(unittest.TestCase):
 
     def test_current_yyyymmddhhmiss(self):
         current_datetime = TimeUtil.current_yyyymmddhhmiss()
-        print(current_datetime)
 
     def test_current_yyyymmdd(self):
         current_datetime = TimeUtil.current_yyyymmdd()
-        print(current_datetime)
 
     def test_datetime_object_from_yyyymmdd_str(self):
         dt = TimeUtil.datetime_object_from_yyyymmdd_str('20140401')

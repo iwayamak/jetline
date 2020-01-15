@@ -22,7 +22,6 @@ class TestTemplateYaml(BaseTestCase):
         correct_result = '/tmp/20140401/file.txt'
         template = TemplateYaml('/tmp/${exec_date:%Y%m%d}/file.txt')
         result = template.apply()
-        print(result)
         self.assertEqual(correct_result, result)
         correct_result = '/tmp/20140401000000/file.txt'
         template = \
@@ -30,7 +29,6 @@ class TestTemplateYaml(BaseTestCase):
                 '/tmp/${exec_date:%Y%m%d%H%M%S}/file.txt'
             )
         result = template.apply()
-        print(result)
         self.assertEqual(correct_result, result)
 
     @freeze_time('2016-03-16 12:34:56')
@@ -39,12 +37,10 @@ class TestTemplateYaml(BaseTestCase):
         correct_result = '/tmp/20160316/file.txt'
         template = TemplateYaml('/tmp/${timestamp:%Y%m%d}/file.txt')
         result = template.apply()
-        print(result)
         self.assertEqual(correct_result, result)
         correct_result = '/tmp/20160316123456/file.txt'
         template = TemplateYaml('/tmp/${timestamp:%Y%m%d%H%M%S}/file.txt')
         result = template.apply()
-        print(result)
         self.assertEqual(correct_result, result)
 
     def test_log_dir(self):
@@ -53,7 +49,6 @@ class TestTemplateYaml(BaseTestCase):
         correct_result = '/tmp/log/file.txt'
         template = TemplateYaml('${log_dir}/file.txt')
         result = template.apply()
-        print(result)
         self.assertEqual(correct_result, result)
 
     def test_batch_name(self):
@@ -62,5 +57,4 @@ class TestTemplateYaml(BaseTestCase):
         correct_result = '/tmp/TestTemplateYaml/file.txt'
         template = TemplateYaml('/tmp/${batch_name}/file.txt')
         result = template.apply()
-        print(result)
         self.assertEqual(correct_result, result)

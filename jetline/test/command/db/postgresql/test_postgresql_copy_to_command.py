@@ -20,6 +20,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
 
     def __init__(self, *args, **kwargs):
         self._class_name = self.__class__.__name__
+        self._sql_str = f'select * from {COMPONENT.schema}.{TABLE_NAME}'
         self._test_data_path = \
             os.path.join(
                 os.path.dirname(__file__), TEST_DATA_DIR
@@ -30,7 +31,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
     def setUpClass(cls) -> None:
         ShareParameter.dry_run_mode = False
         queue = CommandQueue()
-        sql_str = 'drop table if exists {schema}.{table_name}'
+        sql_str = f'drop table if exists {COMPONENT.schema}.{TABLE_NAME}'
         queue.add_command(
             PostgreSQLProcessingCommand(
                 COMPONENT,
@@ -78,14 +79,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = True
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command.csv'
             )
         delimiter = ','
         null_str = None
@@ -94,7 +91,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         force_quote_list = ['str_column', 'date_column']
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
@@ -103,18 +100,15 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_quoting_only_part_for_assert.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_quoting_only_part_for_assert.csv'
             )
         sample_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_quoting_only_part.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_quoting_only_part.csv'
             )
         delimiter = ','
         null_str = None
@@ -123,7 +117,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         force_quote_list = ['str_column', 'date_column']
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
@@ -133,18 +127,15 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_quoting_all_for_assert.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_quoting_all_for_assert.csv'
             )
         sample_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_quoting_all.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_quoting_all.csv'
             )
         delimiter = ','
         null_str = None
@@ -153,7 +144,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         force_quote_list = ['*']
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
@@ -163,18 +154,15 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_for_assert.tsv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_for_assert.tsv'
             )
         sample_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command.tsv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command.tsv'
             )
         delimiter = '\t'
         null_str = None
@@ -183,7 +171,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         force_quote_list = None
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
@@ -193,18 +181,15 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_no_header_for_assert.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_no_header_for_assert.csv'
             )
         sample_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_no_header.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_no_header.csv'
             )
         delimiter = ','
         null_str = None
@@ -213,7 +198,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         force_quote_list = ['*']
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
@@ -223,18 +208,15 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_set_null_str_for_assert.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_set_null_str_for_assert.csv'
             )
         sample_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_set_null_str.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_set_null_str.csv'
             )
         delimiter = ','
         null_str = '<NL>'
@@ -243,7 +225,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         force_quote_list = ['*']
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
@@ -253,18 +235,15 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_pip_delim_for_assert.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_pip_delim_for_assert.csv'
             )
         sample_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_pip_delim.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_pip_delim.csv'
             )
         delimiter = '|'
         null_str = None
@@ -273,7 +252,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         force_quote_list = ['*']
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
@@ -283,18 +262,15 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         method_name = sys._getframe().f_code.co_name
         ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
-        sql_str = \
-            'select * from {schema}.{table_name}'.format(
-                schema=COMPONENT.schema,
-                table_name=TABLE_NAME
-            )
         output_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_no_quote_for_assert.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_no_quote_for_assert.csv'
             )
         sample_csv_file_name = \
             os.path.join(
-                self._test_data_path, 'test_postgresql_copy_to_command_no_quote.csv'
+                self._test_data_path,
+                'test_postgresql_copy_to_command_no_quote.csv'
             )
         delimiter = ','
         null_str = None
@@ -303,7 +279,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '\"'
         force_quote_list = None
         command = PostgreSQLCopyToCommand(
-            COMPONENT, sql_str, output_csv_file_name, delimiter,
+            COMPONENT, self._sql_str, output_csv_file_name, delimiter,
             null_str, header, quote, escape, force_quote_list
         )
         command.execute()
