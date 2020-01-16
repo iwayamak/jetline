@@ -6,12 +6,10 @@ import yaml
 
 
 class YamlUtil(object):
-    def __init__(self):
-        pass
 
     @staticmethod
     def load_file(filename):
-        with open(filename, encoding="utf8") as fd:
+        with open(filename, encoding='utf8') as fd:
             s = fd.read()
         return yaml.load(s, Loader=yaml.SafeLoader)
 
@@ -27,7 +25,3 @@ class YamlUtil(object):
     def write_file(filename, data):
         with open(filename, 'w', encoding='utf8') as fd:
             fd.write(yaml.dump(data))
-
-    @staticmethod
-    def change_value(key, value):
-        pass

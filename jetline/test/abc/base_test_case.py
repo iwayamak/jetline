@@ -5,7 +5,6 @@ import logging.config
 from ...util.path_util import PathUtil
 from ...util.yaml_util import YamlUtil
 
-
 logging.config.dictConfig(YamlUtil.load_file(PathUtil.logging_conf_path()))
 logger = logging.getLogger('jetline')
 

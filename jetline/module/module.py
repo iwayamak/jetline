@@ -12,7 +12,6 @@ logger = logging.getLogger('jetline')
 
 
 class Module(object):
-
     KEY_SUB_MODULE = 'sub_module'
     KEY_SUB_MODULE_NAME = 'name'
     KEY_SUB_MODULE_PARAM = 'param'
@@ -26,28 +25,28 @@ class Module(object):
 
     def set_up(self):
         ShareParameter.sub_module_result = SubModuleResult()
-        ShareParameter.exec_yaml = self._exec_yaml
         ShareParameter.exec_yaml_path = self._exec_yaml_path
+        ShareParameter.exec_yaml = self._exec_yaml
         ShareParameter.exec_date = self._exec_date
         sub_module_list = self._exec_yaml[self.KEY_SUB_MODULE]
         for sub_module in sub_module_list:
             sub_module_name = sub_module[self.KEY_SUB_MODULE_NAME]
-            if sub_module_name in Config.AVAILABLE_SUB_MODULE:
-                sub_module_obj_list = \
-                    SubModuleCreator.create_sub_module_list(
-                        sub_module_name,
-                        sub_module[self.KEY_SUB_MODULE_PARAM],
-                        sub_module[self.KEY_SUB_MODULE_MODE]
-                    )
-                if len(sub_module_obj_list) == 0:
-                    raise Exception('sub_module failed: ' + sub_module_name)
-                else:
-                    for sub_module_obj in sub_module_obj_list:
-                        self._sub_module_obj_list.append(sub_module_obj)
-            else:
+            if sub_module_name not in Config.AVAILABLE_SUB_MODULE:
                 raise Exception(
-                    'this sub_module using is forbidden : ' + sub_module_name
+                    f'this sub_module using is forbidden : {sub_module_name}'
                 )
+            sub_module_obj_list = \
+                SubModuleCreator.create_sub_module_list(
+                    sub_module_name,
+                    sub_module[self.KEY_SUB_MODULE_PARAM],
+                    sub_module[self.KEY_SUB_MODULE_MODE]
+                )
+            if len(sub_module_obj_list) == 0:
+                raise Exception(
+                    f'sub_module failed: {sub_module_name}'
+                )
+            for sub_module_obj in sub_module_obj_list:
+                self._sub_module_obj_list.append(sub_module_obj)
 
     def execute(self):
         for sub_module_obj in self._sub_module_obj_list:
