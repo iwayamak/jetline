@@ -6,7 +6,7 @@ from ..substr.place_holder import PlaceHolder
 class FileUtil(object):
 
     @classmethod
-    def file_to_str(cls, filename, input_value=None):
+    def file_to_str(cls, filename: str, input_value: dict = None):
         if input_value is not None:
             place_holder = PlaceHolder(filename, input_value)
             s = place_holder.apply()

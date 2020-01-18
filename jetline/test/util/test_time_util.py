@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import unittest
 import datetime
 from freezegun import freeze_time
+from ..abc.base_test_case import BaseTestCase
 from ...util.time_util import TimeUtil
 
 
 @freeze_time('2020-04-01 12:34:56')
-class TestTimeUtil(unittest.TestCase):
+class TestTimeUtil(BaseTestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def test_current_yyyymmddhhmiss(self):
         current_datetime = TimeUtil.current_yyyymmddhhmiss()

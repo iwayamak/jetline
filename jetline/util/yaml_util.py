@@ -3,6 +3,7 @@
 import os
 import glob
 import yaml
+from ..substr.template_render import TemplateRender
 
 
 class YamlUtil(object):
@@ -10,7 +11,7 @@ class YamlUtil(object):
     @staticmethod
     def load_file(filename):
         with open(filename, encoding='utf8') as fd:
-            s = fd.read()
+            s = TemplateRender(fd.read()).apply()
         return yaml.load(s, Loader=yaml.SafeLoader)
 
     @staticmethod

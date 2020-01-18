@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys
+from typing import Union
 from .....module.sub_module.abc.sub_module import SubModule
 from .....module.sub_module_parameter.abc.sub_module_parameter import SubModuleParameter
 from .....module.sub_module.result.sub_module_result import SubModuleResult
@@ -11,7 +11,7 @@ from ....abc.base_test_case import BaseTestCase
 
 class ChileSubModuleParameter(SubModuleParameter):
 
-    def __init__(self, params):
+    def __init__(self, params: Union[dict, None]):
         self._member_a = None
         self._member_b = None
         super(ChileSubModuleParameter, self).__init__(params)
@@ -44,15 +44,12 @@ class ChildSubModule(SubModule):
 class TestSubModule(BaseTestCase):
 
     def __init__(self, *args, **kwargs):
-        self._class_name = self.__class__.__name__
         super(TestSubModule, self).__init__(*args, **kwargs)
 
     def setUp(self):
         ShareParameter.sub_module_result = SubModuleResult()
 
     def test_simple(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         param_dict = {'member_a': '1', 'member_b': '2'}
         parameter = ChileSubModuleParameter(param_dict)
         sub_module = ChildSubModule(parameter)
@@ -61,7 +58,5 @@ class TestSubModule(BaseTestCase):
         sub_module.execute()
 
     def test_none_param(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         parameter = ChileSubModuleParameter(None)
         self.assertEqual(None, parameter.member_b)

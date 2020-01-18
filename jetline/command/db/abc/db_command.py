@@ -3,14 +3,15 @@
 import logging
 from abc import ABCMeta, abstractmethod
 from ....command.abc.command import Command
-from ....substr.template import Template
+from ....container.component.abc.component import Component
+from ....substr.template_render import TemplateRender
 
 logger = logging.getLogger('jetline')
 
 
 class DbCommand(Command, metaclass=ABCMeta):
 
-    def __init__(self, component):
+    def __init__(self, component: Component):
         self._query = None
         self._cursor = None
         self._connection = None
@@ -48,7 +49,7 @@ class DbCommand(Command, metaclass=ABCMeta):
     @classmethod
     def create_query(cls, sql_str):
         if sql_str is not None:
-            template = Template(sql_str)
+            template = TemplateRender(sql_str)
             q = template.apply()
         else:
             q = None

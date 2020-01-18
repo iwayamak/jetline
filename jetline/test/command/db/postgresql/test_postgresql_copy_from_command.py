@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 from ....abc.base_test_case import BaseTestCase
 from .....command.command_queue import CommandQueue
 from .....command.db.postgresql.postgresql_processing_command import PostgreSQLProcessingCommand
@@ -17,7 +16,6 @@ TEST_DATA_DIR = 'test_data'
 class TestPostgreSQLCopyFromCommand(BaseTestCase):
 
     def __init__(self, *args, **kwargs):
-        self._class_name = self.__class__.__name__
         self._test_data_path = \
             os.path.join(
                 os.path.dirname(__file__), TEST_DATA_DIR
@@ -50,8 +48,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         queue.execute()
 
     def test_copy_from_dry_run(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = True
         csv_file_name = \
             os.path.join(
@@ -68,8 +64,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         command.execute()
 
     def test_copy_from(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         csv_file_name = \
             os.path.join(
@@ -86,8 +80,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         command.execute()
 
     def test_copy_from_tsv(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         csv_file_name = \
             os.path.join(
@@ -104,8 +96,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         command.execute()
 
     def test_copy_from_no_header(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         csv_file_name = \
             os.path.join(
@@ -122,8 +112,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         command.execute()
 
     def test_copy_from_set_null_str(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         csv_file_name = \
             os.path.join(
@@ -140,8 +128,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         command.execute()
 
     def test_copy_from_pip_delim(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         csv_file_name = \
             os.path.join(
@@ -158,8 +144,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         command.execute()
 
     def test_copy_from_no_quote(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         csv_file_name = os.path.join(
             self._test_data_path, 'test_postgresql_copy_from_command_no_quote.csv'

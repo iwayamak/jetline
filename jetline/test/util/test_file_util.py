@@ -1,9 +1,13 @@
-import unittest
+# -*- coding: utf-8 -*-
+
 import os
+from ..abc.base_test_case import BaseTestCase
 from ...util.file_util import FileUtil
 
 
-class TestFileUtil(unittest.TestCase):
+class TestFileUtil(BaseTestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def test_file_to_str(self):
         filename = \

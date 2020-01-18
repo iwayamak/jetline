@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import glob
 import filecmp
 from ....abc.base_test_case import BaseTestCase
@@ -19,7 +18,6 @@ TEST_DATA_DIR = 'test_data'
 class TestPostgreSQLCopyToCommand(BaseTestCase):
 
     def __init__(self, *args, **kwargs):
-        self._class_name = self.__class__.__name__
         self._sql_str = f'select * from {COMPONENT.schema}.{TABLE_NAME}'
         self._test_data_path = \
             os.path.join(
@@ -76,8 +74,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
             os.remove(file)
 
     def test_copy_dry_run(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = True
         output_csv_file_name = \
             os.path.join(
@@ -97,8 +93,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         command.execute()
 
     def test_copy_to_force_quoting_only_part(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         output_csv_file_name = \
             os.path.join(
@@ -124,8 +118,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
 
     def test_copy_to_force_quoting_all(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         output_csv_file_name = \
             os.path.join(
@@ -151,8 +143,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
 
     def test_copy_to_tsv(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         output_csv_file_name = \
             os.path.join(
@@ -178,8 +168,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
 
     def test_copy_to_no_header(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         output_csv_file_name = \
             os.path.join(
@@ -205,8 +193,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
 
     def test_copy_set_null_str(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         output_csv_file_name = \
             os.path.join(
@@ -232,8 +218,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
 
     def test_copy_pip_delim(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         output_csv_file_name = \
             os.path.join(
@@ -259,8 +243,6 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
 
     def test_copy_no_quote(self):
-        method_name = sys._getframe().f_code.co_name
-        ShareParameter.batch_name = self._class_name + '_' + method_name
         ShareParameter.dry_run_mode = False
         output_csv_file_name = \
             os.path.join(

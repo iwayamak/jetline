@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from abc import ABCMeta
-from ....substr.template_yaml import TemplateYaml
+from ....substr.template_render import TemplateRender
 
 
 class SubModuleParameter(metaclass=ABCMeta):
 
-    def __init__(self, params=None):
+    def __init__(self, params: Union[dict, None] = None):
         if params is not None:
             member_ls = self._value_method_name_list()
             for member_name in member_ls:
                 if member_name in params:
                     v = params[member_name]
                     if isinstance(v, str):
-                        t = TemplateYaml(v)
+                        t = TemplateRender(v)
                         v = t.apply()
                     if isinstance(v, list):
                         v_temp = []
                         for elem in v:
                             if isinstance(elem, str):
-                                t = TemplateYaml(elem)
+                                t = TemplateRender(elem)
                                 elem = t.apply()
                             v_temp.append(elem)
                         v = v_temp

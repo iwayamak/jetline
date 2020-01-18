@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from ....module.sub_module_parameter.abc.sub_module_parameter import SubModuleParameter
 from ....module.sub_module_parameter.value.must_value import MustValue
 from ....module.sub_module_parameter.value.option_value import OptionValue
@@ -45,11 +44,11 @@ class TestSubModuleParameter(BaseTestCase):
 
     def test_all_parameter(self):
         ShareParameter.exec_date = \
-            TimeUtil.datetime_object_from_yyyymmdd_str('20150215')
-        params = {'member_a': '1', 'member_b': '${exec_date:%Y%m%d}'}
+            TimeUtil.datetime_object_from_yyyymmdd_str('20200401')
+        params = {'member_a': '1', 'member_b': '{{exec_date(\'%Y%m%d\')}}'}
         o = ASubModuleParameter(params)
         self.assertEqual('1', o.member_a.get())
-        self.assertEqual('20150215', o.member_b.get())
+        self.assertEqual('20200401', o.member_b.get())
         self.assertEqual(MEMBER_A, o.member_a.display)
         self.assertEqual(MEMBER_B, o.member_b.display)
 

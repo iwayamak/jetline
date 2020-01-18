@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-import unittest
+from ..abc.base_test_case import BaseTestCase
 from ...util.path_util import PathUtil
 
 
-class TestPathUtil(unittest.TestCase):
+class TestPathUtil(BaseTestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def test_framework_root_path(self):
         framework_root_path = PathUtil.framework_root_path()

@@ -1,25 +1,30 @@
 # -*- coding: utf-8 -*-
 
-import logging
+import os
 from jinja2 import Environment, FileSystemLoader
-
-logger = logging.getLogger('jetline')
 
 
 class PlaceHolder(object):
 
-    def __init__(self, filename, input_value):
+    def __init__(self, filename: str, input_value: dict):
         self._filename = filename
         self._input_value = input_value
 
     def apply(self):
-        logger.debug('replace target: ' + self._filename)
         result_str = self._evaluate()
         return result_str
 
     def _evaluate(self):
-        env = Environment(loader=FileSystemLoader('./', encoding='utf-8'))
-        tpl = env.get_template(self._filename)
-
-        result = tpl.render(self._input_value)
+        template_dir = os.path.abspath(
+            os.path.dirname(
+                self._filename
+            )
+        )
+        env = Environment(
+            loader=FileSystemLoader(template_dir, encoding='utf-8')
+        )
+        template = env.get_template(
+            os.path.basename(self._filename)
+        )
+        result = template.render(self._input_value)
         return result
