@@ -102,8 +102,3 @@ class SubModuleResult(object):
         else:
             return data_file[self.KEY_DATA_FILE_S3]
 
-    def get_update_ts(self):
-        return self._param[self.KEY_UPDATE_TS]
-
-    def get_db_name(self, sub_module_name):
-        return sub_module_name
