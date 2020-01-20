@@ -30,6 +30,7 @@ class TestPostgreSQLCopyToParameter(BaseTestCase):
                 'header': False,
                 'quote': ' ',
                 'escape': '\t',
+                'gzip': False,
                 'force_quote_list': ['*']
             }
         )
@@ -41,6 +42,7 @@ class TestPostgreSQLCopyToParameter(BaseTestCase):
         self.assertEqual(False, param.header.get())
         self.assertEqual(' ', param.quote.get())
         self.assertEqual('\t', param.escape.get())
+        self.assertEqual(False, param.gzip.get())
         self.assertEqual(['*'], param.force_quote_list.get())
 
     def test_must_parameter(self):
@@ -111,5 +113,16 @@ class TestPostgreSQLCopyToParameter(BaseTestCase):
                     'sql_file_name': self._sql_file_name,
                     'csv_file_name': self._csv_file_name,
                     'force_quote_list': '*'
+                }
+            )
+
+    def test_gzip_not_bool(self):
+        with self.assertRaises(SubModuleParameterError):
+            PostgreSQLCopyToParameter(
+                {
+                    'postgresql_component_key': self._component,
+                    'sql_file_name': self._sql_file_name,
+                    'csv_file_name': self._csv_file_name,
+                    'gzip': 'gzip'
                 }
             )

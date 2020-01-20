@@ -30,6 +30,7 @@ class PostgreSQLCopyTo(SubModule):
                 self._parameter.header.get(),
                 self._parameter.quote.get(),
                 self._parameter.escape.get(),
+                self._parameter.gzip.get(),
                 self._parameter.force_quote_list.get()
             )
         command.execute()

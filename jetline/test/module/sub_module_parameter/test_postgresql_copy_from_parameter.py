@@ -27,7 +27,8 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
                 'null_str': '<NL>',
                 'header': False,
                 'quote': ' ',
-                'escape': '\t'
+                'escape': '\t',
+                'gzip': False
             }
         )
         self.assertEqual('POSTGRESQL_COMPONENT.ID=UT', param.postgresql_component_key.get())
@@ -38,6 +39,7 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
         self.assertEqual(False, param.header.get())
         self.assertEqual(' ', param.quote.get())
         self.assertEqual('\t', param.escape.get())
+        self.assertEqual(False, param.gzip.get())
 
     def test_must_parameter(self):
         param = PostgreSQLCopyFromParameter(
@@ -101,5 +103,16 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
                     'table_name': 'test_postgresql_copy_from_parameter_table',
                     'csv_file_name': self._csv_file_name,
                     'header': 'header exists'
+                }
+            )
+
+    def test_gzip_not_bool(self):
+        with self.assertRaises(SubModuleParameterError):
+            PostgreSQLCopyFromParameter(
+                {
+                    'postgresql_component_key': 'POSTGRESQL_COMPONENT.ID=UT',
+                    'table_name': 'test_postgresql_copy_from_parameter_table',
+                    'csv_file_name': self._csv_file_name,
+                    'gzip': 'gzip'
                 }
             )
