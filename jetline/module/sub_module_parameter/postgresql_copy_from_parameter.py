@@ -17,6 +17,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         self._header = None
         self._quote = None
         self._escape = None
+        self._gzip = None
         super().__init__(params)
 
     @property
@@ -85,3 +86,12 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     @escape.setter
     def escape(self, v):
         self._escape = OptionValue(v, default='"')
+
+    @property
+    def gzip(self):
+        return self._gzip
+
+    @gzip.setter
+    @Validator.boolean
+    def gzip(self, v):
+        self._gzip = OptionValue(v, default=False)

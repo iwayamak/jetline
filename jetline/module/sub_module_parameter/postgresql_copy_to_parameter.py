@@ -17,6 +17,7 @@ class PostgreSQLCopyToParameter(SubModuleParameter):
         self._header = None
         self._quote = None
         self._escape = None
+        self._gzip = None
         self._force_quote_list = None
         self._input_value = None
         super().__init__(params)
@@ -105,3 +106,12 @@ class PostgreSQLCopyToParameter(SubModuleParameter):
     @Validator.dict
     def input_value(self, v):
         self._input_value = OptionValue(v)
+
+    @property
+    def gzip(self):
+        return self._gzip
+
+    @gzip.setter
+    @Validator.boolean
+    def gzip(self, v):
+        self._gzip = OptionValue(v, default=False)

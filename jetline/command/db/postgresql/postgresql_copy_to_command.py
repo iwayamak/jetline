@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import gzip
+import builtins
 from typing import Union
 from jinja2 import Environment, FileSystemLoader
 from .abc.postgresql_command import PostgreSQLCommand
@@ -18,6 +20,7 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
                  header: bool,
                  quote: str,
                  escape: str,
+                 gzip_mode: bool,
                  force_quote_list: Union[list, None]):
         force_quote = None
         if force_quote_list is not None:
@@ -33,6 +36,7 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
             'force_quote': force_quote
         }
         self._csv_file_name = csv_file_name
+        self._gzip = gzip_mode
         super().__init__(component)
 
     def set_up(self):
@@ -46,9 +50,12 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
 
     def run(self):
         super().run()
-        with open(self._csv_file_name, mode='w', encoding='utf8') as file:
+        if self._gzip:
+            module, mode = [gzip, 'wt']
+        else:
+            module, mode = [builtins, 'w']
+        with module.open(self._csv_file_name, mode=mode, encoding='utf8') as file:
             self._cursor.copy_expert(
-                self._sql_str,
-                file
+                self._sql_str, file
             )
         self._connection.commit()

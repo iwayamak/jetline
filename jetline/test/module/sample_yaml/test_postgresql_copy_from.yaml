@@ -24,6 +24,7 @@ sub_module:
     postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
     table_name: test_postgresql_copy_from
     csv_file_name: sample_yaml/test_data/test_postgresql_copy_from.csv
+    gzip: False
 -
   name: PostgreSQLProcessing
   mode: Count
