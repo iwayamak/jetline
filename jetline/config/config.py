@@ -3,6 +3,7 @@
 
 class Config(object):
     AVAILABLE_SUB_MODULE = (
+        'LocalToS3'
         'PostgreSQLProcessing',
         'PostgreSQLCopyFrom',
         'PostgreSQLCopyTo',

@@ -1,5 +1,6 @@
 nose
 coverage
+boto3
 jinja2==2.10.3
 psycopg2==2.8.4
 python-dateutil==2.8.1
