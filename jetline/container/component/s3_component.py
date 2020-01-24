@@ -46,6 +46,8 @@ class S3Component(Component):
         return instance
 
     @classmethod
-    def _output_log(cls, log_dict):
-        log_dict = copy.deepcopy(dict)
+    def _output_log(cls, instance_dict: dict):
+        log_dict = copy.deepcopy(instance_dict)
+        log_dict["_aws_secret_access_key"] = '****'
+        logger.info(f'created {cls.__name__}')
         logger.info(log_dict)

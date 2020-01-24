@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from boto3.session import Session
+import boto3
 from ....command.abc.command import Command
 from ....container.component.abc.component import Component
 
@@ -12,6 +12,8 @@ class S3Command(Command):
 
     def __init__(self, component: Component):
         self._bucket = None
+        self._session = None
+        self._connection = None
         super().__init__(component)
 
     def set_up(self):
@@ -21,14 +23,9 @@ class S3Command(Command):
         super().body()
 
     def run(self):
-        session = \
-            Session(
-                aws_access_key_id=self.component.aws_access_key,
-                aws_secret_access_key=self.component.aws_secret_access_key,
-                region_name=self.component.region_name)
-        connection = session.resource('s3')
-        self._bucket = connection.Bucket(self.component.bucket)
         super().run()
+        s3 = boto3.resource('s3')
+        self._bucket = s3.Bucket(self.component.bucket)
 
     def dry_run(self):
         super().dry_run()

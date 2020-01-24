@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from freezegun import freeze_time
 from ...parser.kicker_args_parser import KickerArgsParser
 from ..abc.base_test_case import BaseTestCase
 
@@ -14,7 +15,7 @@ class TestKickerArgsParser(BaseTestCase):
         date = '20200401'
         args = ['-y', yaml_name, '-d', date, '-D']
         k = KickerArgsParser(args)
-        self.assertEqual(k.exec_yaml(), yaml_name)
+        self.assertEqual(k.exec_yaml_path(), yaml_name)
         self.assertEqual(k.exec_date(), date)
         self.assertTrue(k.dry_run())
 
@@ -23,7 +24,7 @@ class TestKickerArgsParser(BaseTestCase):
         date = '20200401'
         args = ['--yaml', yaml_name, '--exec-date', date, '--dry-run']
         k = KickerArgsParser(args)
-        self.assertEqual(k.exec_yaml(), yaml_name)
+        self.assertEqual(k.exec_yaml_path(), yaml_name)
         self.assertEqual(k.exec_date(), date)
         self.assertTrue(k.dry_run())
 
@@ -32,7 +33,7 @@ class TestKickerArgsParser(BaseTestCase):
         date = '20200401'
         args = ['-y', yaml_name, '-d', date]
         k = KickerArgsParser(args)
-        self.assertEqual(k.exec_yaml(), yaml_name)
+        self.assertEqual(k.exec_yaml_path(), yaml_name)
         self.assertEqual(k.exec_date(), date)
         self.assertFalse(k.dry_run())
 
@@ -41,6 +42,16 @@ class TestKickerArgsParser(BaseTestCase):
         date = '20200401'
         args = ['--yaml', yaml_name, '--exec-date', date]
         k = KickerArgsParser(args)
-        self.assertEqual(k.exec_yaml(), yaml_name)
+        self.assertEqual(k.exec_yaml_path(), yaml_name)
+        self.assertEqual(k.exec_date(), date)
+        self.assertFalse(k.dry_run())
+
+    @freeze_time('2112-09-03')
+    def test_default_exec_date(self):
+        yaml_name = 'test.yaml'
+        date = '21120903'
+        args = ['--yaml', yaml_name]
+        k = KickerArgsParser(args)
+        self.assertEqual(k.exec_yaml_path(), yaml_name)
         self.assertEqual(k.exec_date(), date)
         self.assertFalse(k.dry_run())

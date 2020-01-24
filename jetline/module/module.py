@@ -49,7 +49,8 @@ class Module(object):
                 self._sub_module_obj_list.append(sub_module_obj)
 
     def execute(self):
-        for sub_module_obj in self._sub_module_obj_list:
+        for seq, sub_module_obj in enumerate(self._sub_module_obj_list):
+            logger.info(f'seq {seq + 1}: {type(sub_module_obj).__name__}')
             sub_module_obj.execute()
 
     def tear_down(self):
@@ -59,4 +60,4 @@ class Module(object):
     def parse_kick_args(cls, argv):
         k = KickerArgsParser(argv)
         ShareParameter.dry_run_mode = k.dry_run()
-        return k.exec_yaml(), k.exec_date()
+        return k.exec_yaml_path(), k.exec_date()

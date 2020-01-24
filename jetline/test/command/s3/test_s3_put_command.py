@@ -24,9 +24,8 @@ class TestS3PutCommand(BaseTestCase):
                 'test_s3_put_command.tsv'
             )
         key = os.path.basename(file_name)
-        command = S3PutCommand(
-            self._component,
-            file_name,
-            key
-        )
+        command = \
+            S3PutCommand(
+                self._component, file_name, key
+            )
         command.execute()

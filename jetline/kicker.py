@@ -3,10 +3,10 @@
 import os
 import sys
 import logging.config
-from .module.module import Module
-from .util.path_util import PathUtil
-from .util.yaml_util import YamlUtil
-from .share_parameter.share_parameter import ShareParameter
+from jetline.module.module import Module
+from jetline.util.path_util import PathUtil
+from jetline.util.yaml_util import YamlUtil
+from jetline.share_parameter.share_parameter import ShareParameter
 
 
 if __name__ == '__main__':
@@ -32,5 +32,6 @@ if __name__ == '__main__':
     finally:
         if module is not None:
             module.tear_down()
-        logger.info(f'module finished... exit_code: {str(exit_code)}')
-        sys.exit(exit_code)
+        if logger is not None:
+            logger.info(f'module finished... exit_code: {str(exit_code)}')
+            sys.exit(exit_code)

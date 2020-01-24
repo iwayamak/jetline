@@ -1,1 +1,3 @@
 /jetline/test/module/cover/
+jobs/
+.coverage
