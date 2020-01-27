@@ -19,10 +19,11 @@ class TestModule(BaseTestCase):
     def test_parse_kick_args(self):
         yaml_name = 'test_postgresql_processing.yaml'
         date = '20200401'
-        args = ['-y', yaml_name, '-d', date]
-        exec_yaml_name, dt_list = Module.parse_kick_args(args)
+        args = ['-y', yaml_name, '-d', date, '-w', 'test_dir']
+        exec_yaml_name, dt_list, working_dir = Module.parse_kick_args(args)
         self.assertEqual(exec_yaml_name, yaml_name)
         self.assertEqual(dt_list, '20200401')
+        self.assertEqual(working_dir, 'test_dir')
 
     def test_return_code(self):
         # success: 0
@@ -58,7 +59,7 @@ class TestModule(BaseTestCase):
         if dry_run:
             args.extend(['-D'])
         try:
-            exec_yaml, exec_date = Module.parse_kick_args(args)
+            exec_yaml, exec_date, working_dir = Module.parse_kick_args(args)
             logger.info('module kicked...')
             logger.info('exec yaml: ' + exec_yaml)
             logger.info('exec_date: ' + exec_date)
