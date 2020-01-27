@@ -27,9 +27,16 @@ class KickerArgsParser(object):
             '-D', '--dry-run', action="store_true", default=False,
             help='perform a dry run'
         )
+
+        # working directory
+        parser.add_argument(
+            '-w', '--working-dir', dest='working_dir',  default=None,
+            help='Absolute path or Relative path from Python execution environment'
+        )
         parsed_args = parser.parse_args(args)
         self._exec_yaml_path = parsed_args.yaml_file
         self._exec_date = parsed_args.exec_date
+        self._working_dir = parsed_args.working_dir
         self._dry_run = parsed_args.dry_run
 
     def exec_yaml_path(self):
@@ -37,6 +44,9 @@ class KickerArgsParser(object):
 
     def exec_date(self):
         return self._exec_date
+
+    def working_dir(self):
+        return self._working_dir
 
     def dry_run(self):
         return self._dry_run

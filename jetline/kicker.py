@@ -14,7 +14,9 @@ if __name__ == '__main__':
     module = None
     logger = None
     try:
-        exec_yaml_path, exec_date = Module.parse_kick_args(sys.argv[1:])
+        exec_yaml_path, exec_date, working_dir = Module.parse_kick_args(sys.argv[1:])
+        if working_dir is not None:
+            os.chdir(working_dir)
         batch_name, ext = os.path.splitext(os.path.basename(exec_yaml_path))
         ShareParameter.batch_name = batch_name
         logging.config.dictConfig(YamlUtil.load_file(PathUtil.logging_conf_path()))

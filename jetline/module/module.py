@@ -60,4 +60,4 @@ class Module(object):
     def parse_kick_args(cls, argv):
         k = KickerArgsParser(argv)
         ShareParameter.dry_run_mode = k.dry_run()
-        return k.exec_yaml_path(), k.exec_date()
+        return k.exec_yaml_path(), k.exec_date(), k.working_dir()

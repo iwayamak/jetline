@@ -10,5 +10,6 @@ class ShareParameter(object):
     log_name = None
     log_dir = None
     sub_module_result = None
+    working_dir = None
     success_return_code = 0
     error_return_code = 1
