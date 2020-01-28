@@ -31,9 +31,8 @@ ENV https_proxy=$https_proxy
 # create log directory
 RUN mkdir -p /tmp/logs
 
-
 # set python path
 ENV PYTHONPATH /opt/app/:/opt/app/jetline
 
 # set entry point
-ENTRYPOINT ["/bin/bash", "/opt/app/jetline/kicker.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/app/jetline/kicker_for_docker.sh"]
