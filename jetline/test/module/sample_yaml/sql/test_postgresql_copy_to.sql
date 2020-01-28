@@ -1,1 +1,5 @@
-select * from {{schema}}.{{table}};
+select
+    *
+from
+    {{schema}}.{{table}}
+;

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ..substr.place_holder import PlaceHolder
+from ..substr.template_render import TemplateRender
 
 
 class FileUtil(object):
@@ -12,7 +13,7 @@ class FileUtil(object):
             s = place_holder.apply()
         else:
             with open(filename, encoding='utf8') as file:
-                s = file.read()
+                s = TemplateRender(file.read()).apply()
         return s
 
     @classmethod

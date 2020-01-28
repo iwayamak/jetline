@@ -13,7 +13,10 @@ class TemplateString(object):
                   years: float = None,
                   months: float = None,
                   days: float = None) -> str:
-        exec_date = ShareParameter.exec_date
+        exec_date = \
+            datetime.strptime(
+                ShareParameter.exec_date, '%Y%m%d'
+            )
         if years is not None:
             exec_date = exec_date + relativedelta(years=years)
         if months is not None:

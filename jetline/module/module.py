@@ -18,17 +18,14 @@ class Module(object):
     KEY_SUB_MODULE_MODE = 'mode'
 
     def __init__(self, exec_yaml_path: str, exec_date: str):
-        self._exec_yaml_path = exec_yaml_path
-        self._exec_yaml = YamlUtil.load_file(exec_yaml_path)
-        self._exec_date = exec_date
+        ShareParameter.exec_yaml_path = exec_yaml_path
+        ShareParameter.exec_date = exec_date
+        ShareParameter.exec_yaml = YamlUtil.load_file(exec_yaml_path)
         self._sub_module_obj_list = []
 
     def set_up(self):
         ShareParameter.sub_module_result = SubModuleResult()
-        ShareParameter.exec_yaml_path = self._exec_yaml_path
-        ShareParameter.exec_yaml = self._exec_yaml
-        ShareParameter.exec_date = self._exec_date
-        sub_module_list = self._exec_yaml[self.KEY_SUB_MODULE]
+        sub_module_list = ShareParameter.exec_yaml[self.KEY_SUB_MODULE]
         for sub_module in sub_module_list:
             sub_module_name = sub_module[self.KEY_SUB_MODULE_NAME]
             if sub_module_name not in Config.AVAILABLE_SUB_MODULE:

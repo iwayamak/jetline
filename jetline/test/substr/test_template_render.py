@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import os
 from freezegun import freeze_time
 from ...substr.template_render import TemplateRender
 from ...share_parameter.share_parameter import ShareParameter
-from ...util.time_util import TimeUtil
+from ...util.file_util import FileUtil
 from ..abc.base_test_case import BaseTestCase
 
 
@@ -12,7 +13,7 @@ class TestTemplateRender(BaseTestCase):
         super().__init__(*args, **kwargs)
 
     def setUp(self) -> None:
-        ShareParameter.exec_date = TimeUtil.datetime_object_from_yyyymmdd_str('20200401')
+        ShareParameter.exec_date = '20200401'
 
     def test_batch_name(self):
         ShareParameter.batch_name = self.__class__.__name__
@@ -73,6 +74,16 @@ class TestTemplateRender(BaseTestCase):
         correct_result = 'hello20190401 good-bye'
         template = TemplateRender('hello{{exec_date(\'%Y%m%d\', years=-1)}} good-bye')
         result = template.apply()
+        self.assertEqual(correct_result, result)
+
+    def test_exec_date_sql_file(self):
+        correct_result = 'select * from test_template_render_table where date_time = \'2020040100\';\n'
+        result = \
+            FileUtil.file_to_str(
+                os.path.join(
+                    os.path.dirname(__file__), 'test_template_render.sql'
+                )
+            )
         self.assertEqual(correct_result, result)
 
     def test_log_dir(self):
