@@ -34,6 +34,7 @@ class PostgreSQLCopyTo(SubModule):
                 self._parameter.force_quote_list.get()
             )
         command.execute()
+        self._result_local_file_list = [self._parameter.csv_file_name.get()]
 
     def tear_down(self):
         super().tear_down()

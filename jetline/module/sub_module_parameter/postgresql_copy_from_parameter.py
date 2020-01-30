@@ -18,6 +18,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         self._quote = None
         self._escape = None
         self._gzip = None
+        self._use_last_result = None
         super().__init__(params)
 
     @property
@@ -28,6 +29,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     @Validator.component_key
     def postgresql_component_key(self, v):
         self._postgresql_component_key = MustValue(v)
+
 
     @property
     def table_name(self):
@@ -44,7 +46,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     @csv_file_name.setter
     @Validator.path
     def csv_file_name(self, v):
-        self._csv_file_name = MustValue(v)
+        self._csv_file_name = OptionValue(v)
 
     @property
     def delimiter(self):
@@ -95,3 +97,12 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     @Validator.boolean
     def gzip(self, v):
         self._gzip = OptionValue(v, default=False)
+
+    @property
+    def use_last_result(self):
+        return self._use_last_result
+
+    @use_last_result.setter
+    @Validator.boolean
+    def use_last_result(self, v):
+        self._use_last_result = OptionValue(v, default=False)

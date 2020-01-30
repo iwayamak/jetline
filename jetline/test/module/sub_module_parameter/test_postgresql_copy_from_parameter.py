@@ -76,15 +76,6 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
                 }
             )
 
-    def test_csv_file_name_not_set(self):
-        with self.assertRaises(SubModuleParameterError):
-            PostgreSQLCopyFromParameter(
-                {
-                    'postgresql_component_key': 'POSTGRESQL_COMPONENT.ID=UT',
-                    'table_name': 'test_postgresql_copy_from_parameter_table'
-                }
-            )
-
     def test_csv_file_name_not_exists(self):
         with self.assertRaises(SubModuleParameterError):
             PostgreSQLCopyFromParameter(

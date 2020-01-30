@@ -2,11 +2,14 @@
 
 import os
 import gzip
+import logging
 import builtins
 from typing import Union
 from jinja2 import Environment, FileSystemLoader
 from .abc.postgresql_command import PostgreSQLCommand
 from ....container.component.postgresql_component import PostgreSQLComponent
+
+logger = logging.getLogger('jetline')
 
 
 class PostgreSQLCopyFromCommand(PostgreSQLCommand):
@@ -14,7 +17,7 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
     def __init__(self,
                  component: PostgreSQLComponent,
                  table_name: str,
-                 csv_file_name: str,
+                 csv_file_name_list: list,
                  delimiter: str,
                  null_str: Union[str, None],
                  header: bool,
@@ -30,7 +33,7 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
             'quote': quote,
             'escape': escape
         }
-        self._csv_file_name = csv_file_name
+        self._csv_file_name_list = csv_file_name_list
         self._gzip = gzip_mode
         super().__init__(component)
 
@@ -48,9 +51,11 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
         else:
             module, mode = [builtins, 'r']
 
-        with module.open(self._csv_file_name, mode=mode, encoding='utf8') as file:
-            self._cursor.copy_expert(
-                self._sql_str,
-                file
-            )
+        for csv_file_name in self._csv_file_name_list:
+            logger.info(f'Loading from {csv_file_name}')
+            with module.open(csv_file_name, mode=mode, encoding='utf8') as file:
+                self._cursor.copy_expert(
+                    self._sql_str,
+                    file
+                )
         self._connection.commit()

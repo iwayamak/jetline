@@ -2,11 +2,14 @@
 
 import os
 import gzip
+import logging
 import builtins
 from typing import Union
 from jinja2 import Environment, FileSystemLoader
 from .abc.postgresql_command import PostgreSQLCommand
 from ....container.component.postgresql_component import PostgreSQLComponent
+
+logger = logging.getLogger('jetline')
 
 
 class PostgreSQLCopyToCommand(PostgreSQLCommand):
@@ -54,6 +57,7 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
             module, mode = [gzip, 'wt']
         else:
             module, mode = [builtins, 'w']
+        logger.info(f'Exporting to {self._csv_file_name}')
         with module.open(self._csv_file_name, mode=mode, encoding='utf8') as file:
             self._cursor.copy_expert(
                 self._sql_str, file

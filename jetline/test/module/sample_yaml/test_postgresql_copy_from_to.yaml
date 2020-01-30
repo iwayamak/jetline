@@ -1,0 +1,73 @@
+sub_module:
+-
+  name: PostgreSQLProcessing
+  mode:
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    sql_file_name: sample_yaml/sql/common/postgresql_drop_table.sql
+    input_value:
+      schema: public
+      table: test_postgresql_copy_to
+-
+  name: PostgreSQLProcessing
+  mode:
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    sql_file_name: sample_yaml/sql/common/postgresql_drop_table.sql
+    input_value:
+      schema: public
+      table: test_postgresql_copy_from
+-
+  name: PostgreSQLProcessing
+  mode:
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    sql_file_name: sample_yaml/sql/common/postgresql_create_table.sql
+    input_value:
+      schema: public
+      table: test_postgresql_copy_to
+-
+  name: PostgreSQLProcessing
+  mode:
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    sql_file_name: sample_yaml/sql/common/postgresql_create_table.sql
+    input_value:
+      schema: public
+      table: test_postgresql_copy_from
+-
+  name: PostgreSQLProcessing
+  mode:
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    sql_file_name: sample_yaml/sql/test_postgresql_copy_to_insert_test_data.sql
+    input_value:
+      schema: public
+      table: test_postgresql_copy_to
+-
+  name: PostgreSQLCopyTo
+  mode:
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    sql_file_name: sample_yaml/sql/test_postgresql_copy_to.sql
+    input_value:
+      schema: public
+      table: test_postgresql_copy_to
+    csv_file_name: sample_yaml/test_data/test_postgresql_copy_to.csv
+-
+  name: PostgreSQLCopyFrom
+  mode:
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    table_name: test_postgresql_copy_from
+    use_last_result: True
+-
+  name: PostgreSQLProcessing
+  mode: Count
+  param:
+    postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+    sql_file_name: sample_yaml/sql/common/postgresql_count.sql
+    input_value:
+      schema: public
+      table: test_postgresql_copy_from
+    assert_eq: 3
