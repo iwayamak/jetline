@@ -49,6 +49,7 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
 
     def test_copy_from_dry_run(self):
         ShareParameter.dry_run_mode = True
+        column_list = None
         csv_file_name = \
             os.path.join(
                 self._test_data_path, 'test_postgresql_copy_from_command.csv'
@@ -60,12 +61,13 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '"'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
         )
         command.execute()
 
     def test_copy_from(self):
         ShareParameter.dry_run_mode = False
+        column_list = None
         csv_file_name = \
             os.path.join(
                 self._test_data_path, 'test_postgresql_copy_from_command.csv'
@@ -77,12 +79,31 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '"'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+        )
+        command.execute()
+
+    def test_copy_from_set_column_list(self):
+        ShareParameter.dry_run_mode = False
+        column_list = ['id', 'str_column', 'date_column']
+        csv_file_name = \
+            os.path.join(
+                self._test_data_path, 'test_postgresql_copy_from_command.csv'
+            )
+        delimiter = ','
+        null_str = None
+        header = True
+        quote = '"'
+        escape = '"'
+        gzip = False
+        command = PostgreSQLCopyFromCommand(
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
         )
         command.execute()
 
     def test_copy_from_tsv(self):
         ShareParameter.dry_run_mode = False
+        column_list = None
         csv_file_name = \
             os.path.join(
                 self._test_data_path, 'test_postgresql_copy_from_command.tsv'
@@ -94,12 +115,13 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '"'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
         )
         command.execute()
 
     def test_copy_from_no_header(self):
         ShareParameter.dry_run_mode = False
+        column_list = None
         csv_file_name = \
             os.path.join(
                 self._test_data_path, 'test_postgresql_copy_from_command_no_header.csv'
@@ -111,12 +133,13 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '"'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
         )
         command.execute()
 
     def test_copy_from_set_null_str(self):
         ShareParameter.dry_run_mode = False
+        column_list = None
         csv_file_name = \
             os.path.join(
                 self._test_data_path, 'test_postgresql_copy_from_command_set_null_str.csv'
@@ -128,12 +151,13 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '"'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null, header, quote, escape, gzip
         )
         command.execute()
 
     def test_copy_from_pip_delim(self):
         ShareParameter.dry_run_mode = False
+        column_list = None
         csv_file_name = \
             os.path.join(
                 self._test_data_path, 'test_postgresql_copy_from_command_pipe_delim.csv'
@@ -145,12 +169,13 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '"'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null, header, quote, escape, gzip
         )
         command.execute()
 
     def test_copy_from_no_quote(self):
         ShareParameter.dry_run_mode = False
+        column_list = None
         csv_file_name = os.path.join(
             self._test_data_path, 'test_postgresql_copy_from_command_no_quote.csv'
         )
@@ -161,12 +186,13 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '\"'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null, header, quote, escape, gzip
         )
         command.execute()
 
     def test_copy_from_gzip(self):
         ShareParameter.dry_run_mode = False
+        column_list = None
         csv_file_name = \
             os.path.join(
                 self._test_data_path, 'test_postgresql_copy_from_command.csv.gz'
@@ -178,6 +204,6 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         escape = '"'
         gzip = True
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
         )
         command.execute()

@@ -11,6 +11,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     def __init__(self, params=None):
         self._postgresql_component_key = None
         self._table_name = None
+        self._column_list = None
         self._csv_file_name = None
         self._delimiter = None
         self._null_str = None
@@ -30,7 +31,6 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     def postgresql_component_key(self, v):
         self._postgresql_component_key = MustValue(v)
 
-
     @property
     def table_name(self):
         return self._table_name
@@ -38,6 +38,15 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     @table_name.setter
     def table_name(self, v):
         self._table_name = MustValue(v)
+
+    @property
+    def column_list(self):
+        return self._column_list
+
+    @column_list.setter
+    @Validator.list
+    def column_list(self, v):
+        self._column_list = OptionValue(v, default=None)
 
     @property
     def csv_file_name(self):

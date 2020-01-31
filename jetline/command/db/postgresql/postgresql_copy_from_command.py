@@ -17,6 +17,7 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
     def __init__(self,
                  component: PostgreSQLComponent,
                  table_name: str,
+                 column_list: Union[list, None],
                  csv_file_name_list: list,
                  delimiter: str,
                  null_str: Union[str, None],
@@ -27,6 +28,7 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
         self._data = {
             'schema': component.schema,
             'table_name': table_name,
+            'column_list': column_list,
             'delimiter': delimiter,
             'null_str': null_str,
             'header': header,

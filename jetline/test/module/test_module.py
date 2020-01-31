@@ -102,3 +102,7 @@ class TestModule(BaseTestCase):
     def test_plugin_run(self):
         exit_code = self._test_sub_module_run('test_plugin.yaml')
         self.assertEqual(0, exit_code)
+
+    def test_column_join_run(self):
+        exit_code = self._test_sub_module_run('column_join.yaml')
+        self.assertEqual(0, exit_code)

@@ -25,6 +25,7 @@ class PostgreSQLCopyFrom(SubModule):
             PostgreSQLCopyFromCommand(
                 component,
                 self._parameter.table_name.get(),
+                self._parameter.column_list.get(),
                 csv_file_name_list,
                 self._parameter.delimiter.get(),
                 self._parameter.null_str.get(),

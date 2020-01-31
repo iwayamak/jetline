@@ -22,6 +22,7 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
             {
                 'postgresql_component_key': 'POSTGRESQL_COMPONENT.ID=UT',
                 'table_name': 'test_postgresql_copy_from_parameter_table',
+                'column_list': ['column_1, column_2, column_3'],
                 'csv_file_name': self._csv_file_name,
                 'delimiter': '\t',
                 'null_str': '<NL>',
@@ -33,6 +34,7 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
         )
         self.assertEqual('POSTGRESQL_COMPONENT.ID=UT', param.postgresql_component_key.get())
         self.assertEqual('test_postgresql_copy_from_parameter_table', param.table_name.get())
+        self.assertEqual(['column_1, column_2, column_3'], param.column_list.get())
         self.assertEqual(self._csv_file_name, param.csv_file_name.get())
         self.assertEqual('\t', param.delimiter.get())
         self.assertEqual('<NL>', param.null_str.get())
@@ -76,6 +78,16 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
                 }
             )
 
+    def test_column_list_not_list(self):
+        with self.assertRaises(SubModuleParameterError):
+            PostgreSQLCopyFromParameter(
+                {
+                    'postgresql_component_key': 'POSTGRESQL_COMPONENT.ID=UT',
+                    'table_name': 'test_postgresql_copy_from_parameter_table',
+                    'column_list': 'column_1',
+                    'csv_file_name': self._csv_file_name
+                }
+            )
     def test_csv_file_name_not_exists(self):
         with self.assertRaises(SubModuleParameterError):
             PostgreSQLCopyFromParameter(
