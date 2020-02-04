@@ -26,7 +26,6 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
                  escape: str,
                  gzip_mode: bool):
         self._data = {
-            'schema': component.schema,
             'table_name': table_name,
             'column_list': column_list,
             'delimiter': delimiter,

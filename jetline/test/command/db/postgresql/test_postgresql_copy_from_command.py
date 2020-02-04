@@ -9,7 +9,7 @@ from .....container.container import Container
 from .....share_parameter.share_parameter import ShareParameter
 
 COMPONENT = Container().component('POSTGRESQL_COMPONENT.ID=UT')
-TABLE_NAME = 'test_postgresql_copy_from_command'
+TABLE_NAME = f'{COMPONENT.schema}.test_postgresql_copy_from_command'
 TEST_DATA_DIR = 'test_data'
 
 
@@ -26,14 +26,14 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
     def setUpClass(cls):
         ShareParameter.dry_run_mode = False
         queue = CommandQueue()
-        sql_str = 'drop table if exists {schema}.{table_name}'
+        sql_str = 'drop table if exists {table_name}'
         queue.add_command(
             PostgreSQLProcessingCommand(
                 COMPONENT,
                 sql_str.format(schema=COMPONENT.schema, table_name=TABLE_NAME))
         )
         sql_str = (
-            'create table {schema}.{table_name} ('
+            'create table {table_name} ('
             ' id integer,'
             ' str_column varchar(6),'
             ' date_column date'

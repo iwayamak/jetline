@@ -1,5 +1,5 @@
 copy
-    {{schema}}.{{table_name}}
+    {{table_name}}
     {%- if column_list != none -%}
     (
         {%- for column in column_list %}
