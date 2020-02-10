@@ -24,6 +24,7 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
                  header: bool,
                  quote: str,
                  escape: str,
+                 encoding: str,
                  gzip_mode: bool):
         self._data = {
             'table_name': table_name,
@@ -32,7 +33,8 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
             'null_str': null_str,
             'header': header,
             'quote': quote,
-            'escape': escape
+            'escape': escape,
+            'encoding': encoding
         }
         self._csv_file_name_list = csv_file_name_list
         self._gzip = gzip_mode

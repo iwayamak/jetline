@@ -59,9 +59,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = '"'
         escape = '"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null_str, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -77,9 +79,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = '"'
         escape = '"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null_str, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -95,9 +99,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = '"'
         escape = '"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null_str, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -113,9 +119,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = ' '
         escape = '"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null_str, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -131,9 +139,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = False
         quote = '"'
         escape = '"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null_str, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -149,9 +159,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = '"'
         escape = '"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -167,9 +179,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = '"'
         escape = '"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -184,9 +198,11 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = ' '
         escape = '\"'
+        encoding = 'utf8'
         gzip = False
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null, header, quote, escape, encoding, gzip
         )
         command.execute()
 
@@ -202,8 +218,10 @@ class TestPostgreSQLCopyFromCommand(BaseTestCase):
         header = True
         quote = '"'
         escape = '"'
+        encoding = 'utf8'
         gzip = True
         command = PostgreSQLCopyFromCommand(
-            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter, null_str, header, quote, escape, gzip
+            COMPONENT, TABLE_NAME, column_list, [csv_file_name], delimiter,
+            null_str, header, quote, escape, encoding, gzip
         )
         command.execute()

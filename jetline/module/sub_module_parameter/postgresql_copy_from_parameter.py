@@ -18,6 +18,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         self._header = None
         self._quote = None
         self._escape = None
+        self._encoding = None
         self._gzip = None
         self._use_last_result = None
         super().__init__(params)
@@ -97,6 +98,14 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     @escape.setter
     def escape(self, v):
         self._escape = OptionValue(v, default='"')
+
+    @property
+    def encoding(self):
+        return self._encoding
+
+    @encoding.setter
+    def encoding(self, v):
+        self._encoding = OptionValue(v, default='utf8')
 
     @property
     def gzip(self):

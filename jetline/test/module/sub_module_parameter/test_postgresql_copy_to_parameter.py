@@ -30,8 +30,9 @@ class TestPostgreSQLCopyToParameter(BaseTestCase):
                 'header': False,
                 'quote': ' ',
                 'escape': '\t',
-                'gzip': False,
-                'force_quote_list': ['*']
+                'gzip': True,
+                'force_quote_list': ['*'],
+                'encoding': 'sjis'
             }
         )
         self.assertEqual(self._component, param.postgresql_component_key.get())
@@ -42,8 +43,9 @@ class TestPostgreSQLCopyToParameter(BaseTestCase):
         self.assertEqual(False, param.header.get())
         self.assertEqual(' ', param.quote.get())
         self.assertEqual('\t', param.escape.get())
-        self.assertEqual(False, param.gzip.get())
+        self.assertEqual(True, param.gzip.get())
         self.assertEqual(['*'], param.force_quote_list.get())
+        self.assertEqual('sjis', param.encoding.get())
 
     def test_must_parameter(self):
         param = PostgreSQLCopyToParameter(
@@ -56,6 +58,14 @@ class TestPostgreSQLCopyToParameter(BaseTestCase):
         self.assertEqual(self._component, param.postgresql_component_key.get())
         self.assertEqual(self._sql_file_name, param.sql_file_name.get())
         self.assertEqual(self._csv_file_name, param.csv_file_name.get())
+        self.assertEqual(',', param.delimiter.get())
+        self.assertEqual(None, param.null_str.get())
+        self.assertEqual(True, param.header.get())
+        self.assertEqual('"', param.quote.get())
+        self.assertEqual('"', param.escape.get())
+        self.assertEqual(False, param.gzip.get())
+        self.assertEqual(None, param.force_quote_list.get())
+        self.assertEqual('utf8', param.encoding.get())
 
     def test_component_not_set(self):
         with self.assertRaises(SubModuleParameterError):

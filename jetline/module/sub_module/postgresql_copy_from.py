@@ -32,6 +32,7 @@ class PostgreSQLCopyFrom(SubModule):
                 self._parameter.header.get(),
                 self._parameter.quote.get(),
                 self._parameter.escape.get(),
+                self._parameter.encoding.get(),
                 self._parameter.gzip.get()
             )
         command.execute()

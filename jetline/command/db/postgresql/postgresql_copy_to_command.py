@@ -23,8 +23,9 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
                  header: bool,
                  quote: str,
                  escape: str,
-                 gzip_mode: bool,
-                 force_quote_list: Union[list, None]):
+                 force_quote_list: Union[list, None],
+                 encoding: str,
+                 gzip_mode: bool):
         force_quote = None
         if force_quote_list is not None:
             force_quote = ','.join(force_quote_list)
@@ -36,7 +37,8 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
             'header': header,
             'quote': quote,
             'escape': escape,
-            'force_quote': force_quote
+            'force_quote': force_quote,
+            'encoding': encoding
         }
         self._csv_file_name = csv_file_name
         self._gzip = gzip_mode

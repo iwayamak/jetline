@@ -88,9 +88,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = False
         force_quote_list = ['str_column', 'date_column']
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
 
@@ -113,9 +114,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = False
         force_quote_list = ['str_column', 'date_column']
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
@@ -139,9 +141,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = False
         force_quote_list = ['*']
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
@@ -165,9 +168,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = False
         force_quote_list = None
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
@@ -191,9 +195,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = False
         force_quote_list = ['*']
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
@@ -217,9 +222,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = False
         force_quote_list = ['*']
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
@@ -243,9 +249,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = False
         force_quote_list = ['*']
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
@@ -269,9 +276,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '\"'
         gzip_mode = False
         force_quote_list = None
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list ,encoding ,gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
@@ -295,9 +303,10 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         escape = '"'
         gzip_mode = True
         force_quote_list = ['str_column', 'date_column']
+        encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, gzip_mode, force_quote_list
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertEqual(

@@ -1,0 +1,13 @@
+sub_module:
+-
+  name: Plugin
+  mode:
+  param:
+    plugin_path: plugin
+    package: column_join_command
+    class_name: ColumnJoinCommand
+    kwargs:
+      target_files:
+        - sample_yaml/test_data/test_postgresql_copy_from.csv
+        - sample_yaml/test_data/test_postgresql_copy_to.csv
+      result_file: sample_yaml/test_data/result.csv

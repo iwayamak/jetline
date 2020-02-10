@@ -14,3 +14,4 @@ from stdin
         csv {{-' header' if header}}
             quote as '{{quote}}'
             escape as '{{escape}}'
+            encoding '{{encoding}}'
