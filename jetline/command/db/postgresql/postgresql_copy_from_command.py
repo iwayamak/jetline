@@ -34,9 +34,9 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
             'header': header,
             'quote': quote,
             'escape': escape,
-            'encoding': encoding
         }
         self._csv_file_name_list = csv_file_name_list
+        self._encoding = encoding
         self._gzip = gzip_mode
         super().__init__(component)
 
@@ -56,7 +56,7 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
 
         for csv_file_name in self._csv_file_name_list:
             logger.info(f'Loading from {csv_file_name}')
-            with module.open(csv_file_name, mode=mode, encoding='utf8') as file:
+            with module.open(csv_file_name, mode=mode, encoding=self._encoding) as file:
                 self._cursor.copy_expert(
                     self._sql_str,
                     file

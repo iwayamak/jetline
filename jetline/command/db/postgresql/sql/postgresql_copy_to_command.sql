@@ -11,4 +11,3 @@ to stdout
             quote as '{{quote}}'
             escape as '{{escape}}'
             {{-' force quote ' ~ force_quote if force_quote != none}}
-            encoding '{{encoding}}'

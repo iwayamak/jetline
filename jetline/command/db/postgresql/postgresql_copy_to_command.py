@@ -37,10 +37,10 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
             'header': header,
             'quote': quote,
             'escape': escape,
-            'force_quote': force_quote,
-            'encoding': encoding
+            'force_quote': force_quote
         }
         self._csv_file_name = csv_file_name
+        self._encoding = encoding
         self._gzip = gzip_mode
         super().__init__(component)
 
@@ -60,7 +60,7 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
         else:
             module, mode = [builtins, 'w']
         logger.info(f'Exporting to {self._csv_file_name}')
-        with module.open(self._csv_file_name, mode=mode, encoding='utf8') as file:
+        with module.open(self._csv_file_name, mode=mode, encoding=self._encoding) as file:
             self._cursor.copy_expert(
                 self._sql_str, file
             )
