@@ -2,7 +2,6 @@
 
 import os
 import logging
-import shutil
 from jetline.container.container import Container
 from jetline.util.file_util import FileUtil
 from jetline.command.db.postgresql.abc.postgresql_command import PostgreSQLCommand
@@ -29,7 +28,7 @@ class ExportPerRecord(PostgreSQLCommand):
 
     def run(self):
         super().run()
-        self._cursor=self._connection.cursor(name="server_cursor")
+        self._cursor = self._connection.cursor(name='server_cursor')
         self._cursor.execute(self._query)
         uniq_check_list = []
         for row in self._cursor:
@@ -46,8 +45,6 @@ class ExportPerRecord(PostgreSQLCommand):
             entity = row[1]
             FileUtil.str_to_file(file_name, entity)
             uniq_check_list.append(row[0])
-        shutil.make_archive(self._output_dir, 'zip', root_dir=self._output_dir)
-        shutil.rmtree(self._output_dir)
 
     def dry_run(self):
         super().dry_run()

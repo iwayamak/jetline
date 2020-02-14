@@ -54,7 +54,6 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         return self._csv_file_name
 
     @csv_file_name.setter
-    @Validator.path
     def csv_file_name(self, v):
         self._csv_file_name = OptionValue(v)
 
