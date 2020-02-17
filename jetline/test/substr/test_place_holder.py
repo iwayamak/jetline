@@ -3,11 +3,13 @@
 import os
 from ..abc.base_test_case import BaseTestCase
 from ...substr.place_holder import PlaceHolder
+from ...share_parameter.share_parameter import ShareParameter
 
 
 class TestPlaceHolder(BaseTestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        ShareParameter.exec_date = '20200401'
 
     def test_exec(self):
         filename = \
@@ -15,7 +17,7 @@ class TestPlaceHolder(BaseTestCase):
                 os.path.dirname(__file__),
                 'test_place_holder.txt'
             )
-        correct_result = 'hello good-bye'
+        correct_result = '20200401 hello good-bye'
         template = PlaceHolder(
             filename,
             {
