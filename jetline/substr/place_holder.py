@@ -2,6 +2,8 @@
 
 import os
 from jinja2 import Environment, FileSystemLoader
+from ..substr.template_string.template_string import TemplateString
+from ..share_parameter.share_parameter import ShareParameter
 
 
 class PlaceHolder(object):
@@ -19,6 +21,14 @@ class PlaceHolder(object):
             os.path.dirname(
                 self._filename
             )
+        )
+        self._input_value.update(
+            {
+                'batch_name': ShareParameter.batch_name,
+                'exec_date': TemplateString.exec_date,
+                'log_dir': ShareParameter.log_dir,
+                'timestamp': TemplateString.timestamp
+            }
         )
         env = Environment(
             loader=FileSystemLoader(template_dir, encoding='utf-8')

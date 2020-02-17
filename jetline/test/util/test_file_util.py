@@ -55,6 +55,6 @@ class TestFileUtil(BaseTestCase):
                 FileUtil.file_to_str(filename), column
             )
         self.assertEqual(
-            '<table><tr><td>column1</td><td>column2</td></tr><tr><td>1</td><td>foo</td></tr><tr><td></td></tr></table>',
+            '<table><tr><td>column1</td><td>column2</td></tr><tr><td>1</td><td>foo</td></tr></table>',
             html_table
         )

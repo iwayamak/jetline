@@ -41,7 +41,9 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
         super().__init__(component)
 
     def set_up(self):
-        env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), 'sql')))
+        env = Environment(
+            loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), 'sql'))
+        )
         template = env.get_template(
             os.path.splitext(os.path.basename(__file__))[0] + '.sql'
         )

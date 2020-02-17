@@ -43,11 +43,10 @@ class TestSubModuleParameter(BaseTestCase):
         super(TestSubModuleParameter, self).__init__(*args, **kwargs)
 
     def test_all_parameter(self):
-        ShareParameter.exec_date = '20200401'
-        params = {'member_a': '1', 'member_b': '{{exec_date(\'%Y%m%d\')}}'}
+        params = {'member_a': '1', 'member_b': '2'}
         o = ASubModuleParameter(params)
         self.assertEqual('1', o.member_a.get())
-        self.assertEqual('20200401', o.member_b.get())
+        self.assertEqual('2', o.member_b.get())
         self.assertEqual(MEMBER_A, o.member_a.display)
         self.assertEqual(MEMBER_B, o.member_b.display)
 

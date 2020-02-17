@@ -3,15 +3,14 @@
 import os
 import glob
 import yaml
-from ..substr.template_render import TemplateRender
+from .file_util import FileUtil
 
 
 class YamlUtil(object):
 
     @staticmethod
     def load_file(filename):
-        with open(filename, encoding='utf8') as fd:
-            s = TemplateRender(fd.read()).apply()
+        s = FileUtil.file_to_str(filename)
         return yaml.load(s, Loader=yaml.SafeLoader)
 
     @staticmethod

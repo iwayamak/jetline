@@ -11,7 +11,7 @@ class PostgreSQLCommand(DbCommand):
     def __init__(self,
                  component: PostgreSQLComponent,
                  sql_str: Union[str, None] = None):
-        self._sql_str = self.create_query(sql_str)
+        self._sql_str = sql_str
         super().__init__(component)
 
     def run(self):

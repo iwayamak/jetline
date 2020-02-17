@@ -2,7 +2,6 @@
 
 from typing import Union
 from abc import ABCMeta
-from ....substr.template_render import TemplateRender
 
 
 class SubModuleParameter(metaclass=ABCMeta):
@@ -13,17 +12,6 @@ class SubModuleParameter(metaclass=ABCMeta):
             for member_name in member_ls:
                 if member_name in params:
                     v = params[member_name]
-                    if isinstance(v, str):
-                        t = TemplateRender(v)
-                        v = t.apply()
-                    if isinstance(v, list):
-                        v_temp = []
-                        for elem in v:
-                            if isinstance(elem, str):
-                                t = TemplateRender(elem)
-                                elem = t.apply()
-                            v_temp.append(elem)
-                        v = v_temp
                     setattr(self, member_name, v)
                 else:
                     setattr(self, member_name, None)

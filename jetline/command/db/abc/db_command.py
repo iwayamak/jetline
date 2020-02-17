@@ -4,7 +4,6 @@ import logging
 from abc import ABCMeta, abstractmethod
 from ....command.abc.command import Command
 from ....container.component.abc.component import Component
-from ....substr.template_render import TemplateRender
 
 logger = logging.getLogger('jetline')
 
@@ -46,11 +45,3 @@ class DbCommand(Command, metaclass=ABCMeta):
     def _mask_password(self):
         pass
 
-    @classmethod
-    def create_query(cls, sql_str):
-        if sql_str is not None:
-            template = TemplateRender(sql_str)
-            q = template.apply()
-        else:
-            q = None
-        return q
