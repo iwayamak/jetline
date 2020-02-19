@@ -30,7 +30,8 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
                 'quote': ' ',
                 'escape': '\t',
                 'encoding': 'sjis',
-                'gzip': False
+                'gzip': False,
+                'remove_source_file': True
             }
         )
         self.assertEqual('POSTGRESQL_COMPONENT.ID=UT', param.postgresql_component_key.get())
@@ -44,6 +45,7 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
         self.assertEqual('\t', param.escape.get())
         self.assertEqual('sjis', param.encoding.get())
         self.assertEqual(False, param.gzip.get())
+        self.assertEqual(True, param.remove_source_file.get())
 
     def test_must_parameter(self):
         param = PostgreSQLCopyFromParameter(
@@ -64,6 +66,7 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
         self.assertEqual('"', param.escape.get())
         self.assertEqual('utf8', param.encoding.get())
         self.assertEqual(False, param.gzip.get())
+        self.assertEqual(False, param.remove_source_file.get())
 
     def test_component_not_set(self):
         with self.assertRaises(SubModuleParameterError):
@@ -113,5 +116,16 @@ class TestPostgreSQLCopyFromParameter(BaseTestCase):
                     'table_name': 'test_postgresql_copy_from_parameter_table',
                     'csv_file_name': self._csv_file_name,
                     'gzip': 'gzip'
+                }
+            )
+
+    def test_remove_source_file_not_bool(self):
+        with self.assertRaises(SubModuleParameterError):
+            PostgreSQLCopyFromParameter(
+                {
+                    'postgresql_component_key': 'POSTGRESQL_COMPONENT.ID=UT',
+                    'table_name': 'test_postgresql_copy_from_parameter_table',
+                    'csv_file_name': self._csv_file_name,
+                    'remove_source_file': 'remove'
                 }
             )
