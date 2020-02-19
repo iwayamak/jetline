@@ -9,9 +9,9 @@ from ...share_parameter.share_parameter import ShareParameter
 class TestPlaceHolder(BaseTestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        ShareParameter.exec_date = '20200401'
 
     def test_exec(self):
+        ShareParameter.exec_date = '20200401'
         filename = \
             os.path.join(
                 os.path.dirname(__file__),

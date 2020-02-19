@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from typing import Union
 import logging
 import importlib
 from abc import ABCMeta, abstractmethod
@@ -11,7 +12,8 @@ logger = logging.getLogger('jetline')
 
 class BuiltInCommand(Command, metaclass=ABCMeta):
 
-    def __init__(self, component: Component, instance_name: str, attr_name: str):
+    def __init__(self, component: Union[Component, None],
+                 instance_name: str, attr_name: str):
         self._instance_name = instance_name
         self._attr_name = attr_name
         super(BuiltInCommand, self).__init__(component)
