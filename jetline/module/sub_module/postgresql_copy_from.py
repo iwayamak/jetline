@@ -39,7 +39,7 @@ class PostgreSQLCopyFrom(SubModule):
                 self._parameter.gzip.get()
             )
         )
-        if self._parameter.remove_source_file:
+        if self._parameter.remove_source_file.get():
             for csv_file_name in csv_file_name_list:
                 queue.add_command(
                     RemoveCommand(csv_file_name)

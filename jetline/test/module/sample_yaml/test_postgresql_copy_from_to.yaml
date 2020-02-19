@@ -53,7 +53,7 @@ sub_module:
     input_value:
       schema: public
       table: test_postgresql_copy_to
-    csv_file_name: sample_yaml/test_data/test_postgresql_copy_to.csv
+    csv_file_name: sample_yaml/test_data/test_postgresql_copy_from_to.csv
 -
   name: PostgreSQLCopyFrom
   mode:
