@@ -4,7 +4,6 @@ import sys
 import logging
 import importlib
 from .abc.sub_module import SubModule
-from ...command.command_queue import CommandQueue
 from ..sub_module_parameter.plugin_parameter import PluginParameter
 
 logger = logging.getLogger('jetline')
@@ -25,9 +24,8 @@ class Plugin(SubModule):
         m = importlib.import_module(package)
         sub_module = getattr(m, class_name)(kwargs)
 
-        queue = CommandQueue()
-        queue.add_command(sub_module)
-        queue.execute()
+        command = sub_module
+        command.execute()
 
     def tear_down(self):
         super().tear_down()

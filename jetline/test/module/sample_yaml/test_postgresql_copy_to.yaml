@@ -27,8 +27,8 @@ sub_module:
       schema: public
       table: test_postgresql_copy_to
 -
-  name: PostgreSQLCopyTo
-  mode:
+  name: PostgreSQLCopy
+  mode: To
   param:
     postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
     sql_file_name: sample_yaml/sql/test_postgresql_copy_to.sql
