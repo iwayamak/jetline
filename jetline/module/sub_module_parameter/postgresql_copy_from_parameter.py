@@ -21,6 +21,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         self._encoding = None
         self._gzip = None
         self._use_last_result = None
+        self._remove_source_file = None
         super().__init__(params)
 
     @property
@@ -123,3 +124,12 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
     @Validator.boolean
     def use_last_result(self, v):
         self._use_last_result = OptionValue(v, default=False)
+
+    @property
+    def remove_source_file(self):
+        return self._remove_source_file
+
+    @remove_source_file.setter
+    @Validator.boolean
+    def remove_source_file(self, v):
+        self._remove_source_file = OptionValue(v, default=False)

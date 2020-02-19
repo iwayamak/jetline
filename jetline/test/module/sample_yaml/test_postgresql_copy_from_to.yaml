@@ -61,6 +61,7 @@ sub_module:
     postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
     table_name: public.test_postgresql_copy_from
     use_last_result: True
+    remove_source_file: True
 -
   name: PostgreSQLProcessing
   mode: Count

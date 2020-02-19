@@ -3,6 +3,8 @@
 from .abc.sub_module import SubModule
 from ...container.container import Container
 from ...share_parameter.share_parameter import ShareParameter
+from ...command.command_queue import CommandQueue
+from ...command.local.remove_command import RemoveCommand
 from ...command.db.postgresql.postgresql_copy_from_command import PostgreSQLCopyFromCommand
 from ..sub_module_parameter.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
 
@@ -21,7 +23,8 @@ class PostgreSQLCopyFrom(SubModule):
             Container.component(
                 self._parameter.postgresql_component_key.get()
             )
-        command = \
+        queue = CommandQueue()
+        queue.add_command(
             PostgreSQLCopyFromCommand(
                 component,
                 self._parameter.table_name.get(),
@@ -35,7 +38,13 @@ class PostgreSQLCopyFrom(SubModule):
                 self._parameter.encoding.get(),
                 self._parameter.gzip.get()
             )
-        command.execute()
+        )
+        if self._parameter.remove_source_file:
+            for csv_file_name in csv_file_name_list:
+                queue.add_command(
+                    RemoveCommand(csv_file_name)
+                )
+        queue.execute()
 
     def tear_down(self):
         super().tear_down()
