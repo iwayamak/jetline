@@ -18,10 +18,10 @@ class CommandQueue(object):
         self._command_list.append(command)
 
     def execute(self):
-        logger.debug("execute")
+        logger.debug('command queue executing')
         command = self._next()
         while command is not None:
-            logger.debug(self._current_index)
+            logger.debug(f'queue seq: {self._current_index}')
             command.execute()
             command = self._next()
 

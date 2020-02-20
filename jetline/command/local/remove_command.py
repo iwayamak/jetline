@@ -17,7 +17,7 @@ class RemoveCommand(BuiltInCommand):
 
     def __init__(self, remove_path):
         self._remove_path = remove_path
-        logger.debug(f'remove_path: {self._remove_path}')
+        logger.info(f'remove_path: {self._remove_path}')
         if os.path.isdir(self._remove_path):
             super().__init__(None, self.D_INSTANCE_NAME, self.D_ATTR_NAME)
         else:

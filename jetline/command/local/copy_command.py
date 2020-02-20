@@ -16,7 +16,8 @@ class CopyCommand(BuiltInCommand):
     def __init__(self, source_path, destination_path):
         self._source_path = source_path
         self._destination_path = destination_path
-        logger.debug(f'source_path: {self._source_path}')
+        logger.info(f'source_path: {self._source_path}')
+        logger.info(f'destination_path: {self._destination_path}')
         if os.path.isdir(self._source_path):
             super().__init__(None, self.INSTANCE_NAME, self.D_ATTR_NAME)
         else:

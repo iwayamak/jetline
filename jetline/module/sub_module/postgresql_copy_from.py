@@ -15,7 +15,7 @@ class PostgreSQLCopyFrom(SubModule):
         super().__init__(param)
 
     def run(self):
-        csv_file_name_list = self._parameter.csv_file_name_list.get()
+        csv_file_name_list = [self._parameter.csv_file_name.get()]
         if self._parameter.use_last_result.get():
             csv_file_name_list = \
                 ShareParameter.sub_module_result.get_last_log_local_data_file_list()

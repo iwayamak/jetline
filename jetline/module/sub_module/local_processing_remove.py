@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import logging
 from .abc.sub_module import SubModule
 from ..sub_module_parameter.local_processing_remove_parameter import LocalProcessingRemoveParameter
@@ -22,10 +23,8 @@ class LocalProcessingRemove(SubModule):
                 ShareParameter.sub_module_result.get_last_log_local_data_file_list()
         queue = CommandQueue()
         for path in path_list:
-            queue.add_command(
-                RemoveCommand(path)
-            )
+            if os.path.exists(path):
+                queue.add_command(
+                    RemoveCommand(path)
+                )
         queue.execute()
-
-    def tear_down(self):
-        super().tear_down()
