@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 from ....command.local.remove_command import RemoveCommand
 from ....share_parameter.share_parameter import ShareParameter
@@ -9,23 +11,28 @@ class TestRemoveCommand(BaseTestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def test_execute(self):
-        f = os.path.join(os.path.dirname(__file__), 'test_remove_command_file')
-        d = os.path.join(os.path.dirname(__file__), 'test_remove_command_dir')
+    def setUp(self) -> None:
         ShareParameter.dry_run_mode = False
 
-        if not os.path.exists(d):
-            os.mkdir(d)
-
-        if not os.path.exists(f):
-            with open(f, 'a'):
+    def test_remove_file(self):
+        file_path = os.path.join(
+            os.path.dirname(__file__),
+            'test_remove_command_file'
+        )
+        if not os.path.exists(file_path):
+            with open(file_path, 'a'):
                 os.uname()
-
-        command = RemoveCommand(f)
+        command = RemoveCommand(file_path)
         command.execute()
+        self.assertFalse(os.path.exists(file_path))
 
-        command2 = RemoveCommand(d)
+    def test_remove_directory(self):
+        directory_path = os.path.join(
+            os.path.dirname(__file__),
+            'test_remove_command_dir'
+        )
+        if not os.path.exists(directory_path):
+            os.mkdir(directory_path)
+        command2 = RemoveCommand(directory_path)
         command2.execute()
-
-        self.assertFalse(os.path.exists(f))
-        self.assertFalse(os.path.exists(d))
+        self.assertFalse(os.path.exists(directory_path))

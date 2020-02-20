@@ -1,0 +1,7 @@
+sub_module:
+-
+  name: LocalProcessing
+  mode: Remove
+  param:
+    path_list:
+      - sample_yaml/test_data/test_local_processing_remove.csv

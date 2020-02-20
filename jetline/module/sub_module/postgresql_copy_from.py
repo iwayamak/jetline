@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from .abc.sub_module import SubModule
+from ..sub_module_parameter.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
+from ...command.command_queue import CommandQueue
+from ...command.db.postgresql.postgresql_copy_from_command import PostgreSQLCopyFromCommand
+from ...command.local.remove_command import RemoveCommand
 from ...container.container import Container
 from ...share_parameter.share_parameter import ShareParameter
-from ...command.command_queue import CommandQueue
-from ...command.local.remove_command import RemoveCommand
-from ...command.db.postgresql.postgresql_copy_from_command import PostgreSQLCopyFromCommand
-from ..sub_module_parameter.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
 
 
 class PostgreSQLCopyFrom(SubModule):
@@ -15,7 +15,7 @@ class PostgreSQLCopyFrom(SubModule):
         super().__init__(param)
 
     def run(self):
-        csv_file_name_list = [self._parameter.csv_file_name.get()]
+        csv_file_name_list = self._parameter.csv_file_name_list.get()
         if self._parameter.use_last_result.get():
             csv_file_name_list = \
                 ShareParameter.sub_module_result.get_last_log_local_data_file_list()

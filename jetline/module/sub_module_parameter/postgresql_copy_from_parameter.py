@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from .abc.sub_module_parameter import SubModuleParameter
-from ...validator.validator import Validator
 from ..sub_module_parameter.value.must_value import MustValue
 from ..sub_module_parameter.value.option_value import OptionValue
+from ...validator.validator import Validator
 
 
 class PostgreSQLCopyFromParameter(SubModuleParameter):
