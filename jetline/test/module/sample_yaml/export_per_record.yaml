@@ -1,12 +1,12 @@
 sub_module:
--
-  name: Plugin
-  mode:
-  param:
-    plugin_path: plugin
-    package: export_per_record
-    class_name: ExportPerRecord
-    kwargs:
-      component_key: POSTGRESQL_COMPONENT.ID=UT
-      sql_file_name: sample_yaml/sql/export_per_record.sql
-      output_dir: sample_yaml/test_data/export_per_record
+  -
+    name: Plugin
+    mode:
+    param:
+      plugin_path: plugin
+      package: export_per_record
+      class_name: ExportPerRecord
+      kwargs:
+        component_key: POSTGRESQL_COMPONENT.ID=UT
+        sql_file_name: sample_yaml/sql/export_per_record.sql
+        output_dir: sample_yaml/test_data/export_per_record
