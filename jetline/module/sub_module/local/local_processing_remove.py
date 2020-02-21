@@ -2,11 +2,11 @@
 
 import os
 import logging
-from .abc.sub_module import SubModule
-from ..sub_module_parameter.local_processing_remove_parameter import LocalProcessingRemoveParameter
-from ...command.command_queue import CommandQueue
-from ...command.local.remove_command import RemoveCommand
-from ...share_parameter.share_parameter import ShareParameter
+from ..abc.sub_module import SubModule
+from ...sub_module_parameter.local_processing_remove_parameter import LocalProcessingRemoveParameter
+from ....command.command_queue import CommandQueue
+from ....command.local.remove_command import RemoveCommand
+from ....share_parameter.share_parameter import ShareParameter
 
 logger = logging.getLogger('jetline')
 

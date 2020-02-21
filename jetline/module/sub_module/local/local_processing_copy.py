@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from .abc.sub_module import SubModule
-from ..sub_module_parameter.local_processing_copy_parameter import LocalProcessingCopyParameter
-from ...command.local.copy_command import CopyCommand
+from ..abc.sub_module import SubModule
+from ...sub_module_parameter.local_processing_copy_parameter import LocalProcessingCopyParameter
+from ....command.local.copy_command import CopyCommand
 
 logger = logging.getLogger('jetline')
 

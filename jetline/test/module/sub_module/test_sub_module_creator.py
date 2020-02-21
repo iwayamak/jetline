@@ -5,8 +5,8 @@ from ...abc.base_test_case import BaseTestCase
 from ....module.sub_module.sub_module_creator import SubModuleCreator
 from ....module.sub_module_parameter.postgresql_processing_parameter import PostgreSQLProcessingParameter
 from ....module.sub_module_parameter.postgresql_processing_count_parameter import PostgreSQLProcessingCountParameter
-from ....module.sub_module.postgresql_processing import PostgreSQLProcessing
-from ....module.sub_module.postgresql_processing_count import PostgreSQLProcessingCount
+from ....module.sub_module.db.postgresql.postgresql_processing import PostgreSQLProcessing
+from ....module.sub_module.db.postgresql.postgresql_processing_count import PostgreSQLProcessingCount
 
 
 class TestSubModuleCreator(BaseTestCase):

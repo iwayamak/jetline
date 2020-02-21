@@ -2,6 +2,7 @@
 
 from ...exception.sub_module_load_error import SubModuleLoadError
 import os
+import glob
 import importlib
 import importlib.util
 
@@ -34,13 +35,17 @@ class SubModuleCreator(object):
             raise SubModuleLoadError(sub_module_param_key)
 
         sub_module_dir = os.path.dirname(__file__)
-        sub_module_files = os.listdir(sub_module_dir)
+        sub_module_files = \
+            glob.glob(
+                os.path.join(sub_module_dir, '**/*.py'), recursive=True
+            )
         sub_module = None
         for file in sub_module_files:
-            if file.startswith('_') or not file.endswith('.py'):
+            file_name = os.path.basename(file)
+            if file_name.startswith('_'):
                 continue
-            name = file[:-3]
-            m = importlib.import_module('..' + name, package=cls.__module__)
+            name = file[:-3].replace(f'{sub_module_dir}/', '').replace(os.path.sep, '.')
+            m = importlib.import_module(f'..{name}', package=cls.__module__)
             obj_list = dir(m)
 
             # create the sub_module with an arg of the sub_module_parameter

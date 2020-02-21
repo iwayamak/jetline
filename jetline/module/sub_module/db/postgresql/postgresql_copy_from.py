@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from .abc.sub_module import SubModule
-from ..sub_module_parameter.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
-from ...command.command_queue import CommandQueue
-from ...command.db.postgresql.postgresql_copy_from_command import PostgreSQLCopyFromCommand
-from ...command.local.remove_command import RemoveCommand
-from ...container.container import Container
-from ...share_parameter.share_parameter import ShareParameter
+from ...abc.sub_module import SubModule
+from ....sub_module_parameter.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
+from .....command.command_queue import CommandQueue
+from .....command.db.postgresql.postgresql_copy_from_command import PostgreSQLCopyFromCommand
+from .....command.local.remove_command import RemoveCommand
+from .....container.container import Container
+from .....share_parameter.share_parameter import ShareParameter
 
 
 class PostgreSQLCopyFrom(SubModule):

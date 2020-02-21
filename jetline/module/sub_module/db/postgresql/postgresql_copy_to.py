@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from .abc.sub_module import SubModule
-from ...container.container import Container
-from ...command.db.postgresql.postgresql_copy_to_command import PostgreSQLCopyToCommand
-from ..sub_module_parameter.postgresql_copy_to_parameter import PostgreSQLCopyToParameter
-from ...util.file_util import FileUtil
+from ...abc.sub_module import SubModule
+from ....sub_module_parameter.postgresql_copy_to_parameter import PostgreSQLCopyToParameter
+from .....container.container import Container
+from .....command.db.postgresql.postgresql_copy_to_command import PostgreSQLCopyToCommand
+from .....util.file_util import FileUtil
 
 
 class PostgreSQLCopyTo(SubModule):
