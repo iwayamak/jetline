@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from ....module.sub_module_parameter.local_processing_remove_parameter import LocalProcessingRemoveParameter
+from ....module.sub_module_parameter.local.local_processing_remove_parameter import LocalProcessingRemoveParameter
 from ....exception.sub_module_parameter_error import SubModuleParameterError
 from ...abc.base_test_case import BaseTestCase
 

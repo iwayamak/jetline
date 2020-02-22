@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ...abc.sub_module import SubModule
-from ....sub_module_parameter.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
+from ....sub_module_parameter.db.postgresql.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
 from .....command.command_queue import CommandQueue
 from .....command.db.postgresql.postgresql_copy_from_command import PostgreSQLCopyFromCommand
 from .....command.local.remove_command import RemoveCommand

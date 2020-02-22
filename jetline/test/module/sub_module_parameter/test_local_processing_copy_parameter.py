@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from ....module.sub_module_parameter.local_processing_copy_parameter import LocalProcessingCopyParameter
+from ....module.sub_module_parameter.local.local_processing_copy_parameter import LocalProcessingCopyParameter
 from ....exception.sub_module_parameter_error import SubModuleParameterError
 from ...abc.base_test_case import BaseTestCase
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from .postgresql_processing_parameter import PostgreSQLProcessingParameter
-from ..sub_module_parameter.value.option_value import OptionValue
-from ...validator.validator import Validator
+from ...value.option_value import OptionValue
+from .....validator.validator import Validator
 
 
 class PostgreSQLProcessingCountParameter(PostgreSQLProcessingParameter):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from ....module.sub_module_parameter.postgresql_processing_count_parameter import PostgreSQLProcessingCountParameter
+from ....module.sub_module_parameter.db.postgresql.postgresql_processing_count_parameter import PostgreSQLProcessingCountParameter
 from ....exception.sub_module_parameter_error import SubModuleParameterError
 from ....test.abc.base_test_case import BaseTestCase
 

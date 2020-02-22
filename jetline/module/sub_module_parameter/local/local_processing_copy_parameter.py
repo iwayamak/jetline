@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from .abc.sub_module_parameter import SubModuleParameter
-from ..sub_module_parameter.value.must_value import MustValue
+from ..abc.sub_module_parameter import SubModuleParameter
+from ..value.must_value import MustValue
 
 
 class LocalProcessingCopyParameter(SubModuleParameter):

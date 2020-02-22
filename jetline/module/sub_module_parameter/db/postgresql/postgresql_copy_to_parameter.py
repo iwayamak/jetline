@@ -1,27 +1,26 @@
 # -*- coding: utf-8 -*-
 
-from .abc.sub_module_parameter import SubModuleParameter
-from ..sub_module_parameter.value.must_value import MustValue
-from ..sub_module_parameter.value.option_value import OptionValue
-from ...validator.validator import Validator
+from ...abc.sub_module_parameter import SubModuleParameter
+from ...value.must_value import MustValue
+from ...value.option_value import OptionValue
+from .....validator.validator import Validator
 
 
-class PostgreSQLCopyFromParameter(SubModuleParameter):
+class PostgreSQLCopyToParameter(SubModuleParameter):
 
     def __init__(self, params=None):
         self._postgresql_component_key = None
-        self._table_name = None
-        self._column_list = None
+        self._sql_file_name = None
         self._csv_file_name = None
         self._delimiter = None
         self._null_str = None
         self._header = None
         self._quote = None
         self._escape = None
+        self._force_quote_list = None
         self._encoding = None
         self._gzip = None
-        self._use_last_result = None
-        self._remove_source_file = None
+        self._input_value = None
         super().__init__(params)
 
     @property
@@ -34,21 +33,13 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         self._postgresql_component_key = MustValue(v)
 
     @property
-    def table_name(self):
-        return self._table_name
+    def sql_file_name(self):
+        return self._sql_file_name
 
-    @table_name.setter
-    def table_name(self, v):
-        self._table_name = MustValue(v)
-
-    @property
-    def column_list(self):
-        return self._column_list
-
-    @column_list.setter
-    @Validator.list
-    def column_list(self, v):
-        self._column_list = OptionValue(v, default=None)
+    @sql_file_name.setter
+    @Validator.path
+    def sql_file_name(self, v):
+        self._sql_file_name = MustValue(v)
 
     @property
     def csv_file_name(self):
@@ -56,7 +47,7 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
 
     @csv_file_name.setter
     def csv_file_name(self, v):
-        self._csv_file_name = OptionValue(v)
+        self._csv_file_name = MustValue(v)
 
     @property
     def delimiter(self):
@@ -100,6 +91,15 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         self._escape = OptionValue(v, default='"')
 
     @property
+    def force_quote_list(self):
+        return self._force_quote_list
+
+    @force_quote_list.setter
+    @Validator.list
+    def force_quote_list(self, v):
+        self._force_quote_list = OptionValue(v)
+
+    @property
     def encoding(self):
         return self._encoding
 
@@ -117,19 +117,10 @@ class PostgreSQLCopyFromParameter(SubModuleParameter):
         self._gzip = OptionValue(v, default=False)
 
     @property
-    def use_last_result(self):
-        return self._use_last_result
+    def input_value(self):
+        return self._input_value
 
-    @use_last_result.setter
-    @Validator.boolean
-    def use_last_result(self, v):
-        self._use_last_result = OptionValue(v, default=False)
-
-    @property
-    def remove_source_file(self):
-        return self._remove_source_file
-
-    @remove_source_file.setter
-    @Validator.boolean
-    def remove_source_file(self, v):
-        self._remove_source_file = OptionValue(v, default=False)
+    @input_value.setter
+    @Validator.dict
+    def input_value(self, v):
+        self._input_value = OptionValue(v)

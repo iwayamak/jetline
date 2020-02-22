@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ...abc.sub_module import SubModule
-from ....sub_module_parameter.postgresql_processing_count_parameter import PostgreSQLProcessingCountParameter
+from ....sub_module_parameter.db.postgresql.postgresql_processing_count_parameter import PostgreSQLProcessingCountParameter
 from .....container.container import Container
 from .....command.db.postgresql.postgresql_processing_count_command import PostgreSQLProcessingCountCommand
 from .....util.file_util import FileUtil
