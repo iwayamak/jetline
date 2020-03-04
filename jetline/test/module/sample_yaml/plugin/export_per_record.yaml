@@ -1,0 +1,12 @@
+sub_module:
+  -
+    name: Plugin
+    mode:
+    param:
+      plugin_path: plugin_module
+      package: export_per_record
+      class_name: ExportPerRecord
+      kwargs:
+        component_key: POSTGRESQL_COMPONENT.ID=UT
+        sql_file_name: sql/export_per_record.sql
+        output_dir: test_data/export_per_record

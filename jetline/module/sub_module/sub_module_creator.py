@@ -17,7 +17,7 @@ class SubModuleCreator(object):
         sub_module_key = sub_module_name
         if mode is not None:
             sub_module_key = f'{sub_module_name}{mode}'
-        sub_module_param_key = sub_module_key + 'Parameter'
+        sub_module_param_key = f'{sub_module_key}Parameter'
         sub_module_param_dir = \
             os.path.join(
                 os.path.dirname(__file__), os.pardir, 'sub_module_parameter'

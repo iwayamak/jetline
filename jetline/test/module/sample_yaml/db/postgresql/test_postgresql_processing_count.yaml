@@ -1,0 +1,11 @@
+sub_module:
+  -
+    name: PostgreSQLProcessing
+    mode: Count
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/test_postgresql_processing_count.sql
+      assert_eq: 3
+      assert_ne: 4
+      assert_ge: 2
+      assert_le: 6

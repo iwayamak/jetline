@@ -1,0 +1,20 @@
+sub_module:
+  -
+    name: LocalProcessing
+    mode: Remove
+    param:
+      path_list:
+        - test_data_temp
+  -
+    name: LocalProcessing
+    mode: Copy
+    param:
+      source_path: test_data
+      destination_path: test_data_temp
+  -
+    name: LocalProcessing
+    mode: Remove
+    param:
+      path_list:
+        - test_data_temp/test_local_processing.csv
+        - test_data_temp

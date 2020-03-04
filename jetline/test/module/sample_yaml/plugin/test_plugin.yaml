@@ -1,0 +1,9 @@
+sub_module:
+  -
+    name: Plugin
+    mode:
+    param:
+      plugin_path: plugin_module
+      package: sample_command
+      class_name: SampleCommand
+      kwargs: {"key1": "value1"}

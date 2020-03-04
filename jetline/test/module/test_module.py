@@ -27,22 +27,22 @@ class TestModule(BaseTestCase):
 
     def test_return_code(self):
         # success: 0
-        exit_code = self._test_sub_module_run('test_postgresql_processing.yaml', True)
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_processing.yaml', True)
         self.assertEqual(0, exit_code)
 
         # error: 1
-        exit_code = self._test_sub_module_run('test_postgresql_processing_error.yaml', True)
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_processing_error.yaml', True)
         self.assertEqual(1, exit_code)
 
         # success: 2
         ShareParameter.success_return_code = 2
-        exit_code = self._test_sub_module_run('test_postgresql_processing.yaml', True)
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_processing.yaml', True)
         self.assertEqual(2, exit_code)
         ShareParameter.success_return_code = 0
 
         # error: 3x
         ShareParameter.error_return_code = 3
-        exit_code = self._test_sub_module_run('test_postgresql_processing_error.yaml', True)
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_processing_error.yaml', True)
         self.assertEqual(3, exit_code)
         ShareParameter.error_return_code = 1
 
@@ -55,14 +55,16 @@ class TestModule(BaseTestCase):
                 yaml_file_name
             )
         date = datetime.now().strftime('%Y%m%d')
-        args = ['-y', yaml_file_path, '-d', date]
+        args = ['-y', yaml_file_path, '-d', date, '-w', os.path.dirname(yaml_file_path)]
         if dry_run:
             args.extend(['-D'])
         try:
             exec_yaml, exec_date, working_dir = Module.parse_kick_args(args)
+            os.chdir(working_dir)
             logger.info('module kicked...')
-            logger.info('exec yaml: ' + exec_yaml)
-            logger.info('exec_date: ' + exec_date)
+            logger.info(f'exec yaml: {exec_yaml}')
+            logger.info(f'exec_date: {exec_date}')
+            logger.info(f'working_dir: {working_dir}')
             module = Module(exec_yaml, exec_date)
             module.set_up()
             module.execute()
@@ -80,39 +82,43 @@ class TestModule(BaseTestCase):
         super().tearDown()
 
     def test_postgresql_processing_run(self):
-        exit_code = self._test_sub_module_run('test_postgresql_processing.yaml')
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_processing.yaml')
         self.assertEqual(0, exit_code)
 
     def test_postgresql_processing_count_run(self):
-        exit_code = self._test_sub_module_run('test_postgresql_processing_count.yaml')
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_processing_count.yaml')
         self.assertEqual(0, exit_code)
 
     def test_postgresql_copy_from_run(self):
-        exit_code = self._test_sub_module_run('test_postgresql_copy_from.yaml')
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_copy_from.yaml')
         self.assertEqual(0, exit_code)
 
     def test_postgresql_copy_to_run(self):
-        exit_code = self._test_sub_module_run('test_postgresql_copy_to.yaml')
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_copy_to.yaml')
         self.assertEqual(0, exit_code)
 
     def test_postgresql_copy_from_to_run(self):
-        exit_code = self._test_sub_module_run('test_postgresql_copy_from_to.yaml')
+        exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_copy_from_to.yaml')
         self.assertEqual(0, exit_code)
 
     def test_local_processing_copy_run(self):
-        exit_code = self._test_sub_module_run('test_local_processing_copy.yaml')
+        exit_code = self._test_sub_module_run('local/test_local_processing_copy.yaml')
         self.assertEqual(0, exit_code)
 
     def test_local_processing_remove_run(self):
-        exit_code = self._test_sub_module_run('test_local_processing_remove.yaml')
+        exit_code = self._test_sub_module_run('local/test_local_processing_remove.yaml')
+        self.assertEqual(0, exit_code)
+
+    def test_s3_put(self):
+        exit_code = self._test_sub_module_run('s3/test_s3_put.yaml')
         self.assertEqual(0, exit_code)
 
     def test_plugin_run(self):
-        exit_code = self._test_sub_module_run('test_plugin.yaml')
+        exit_code = self._test_sub_module_run('plugin/test_plugin.yaml')
         self.assertEqual(0, exit_code)
-        exit_code = self._test_sub_module_run('column_join.yaml')
+        exit_code = self._test_sub_module_run('plugin/column_join.yaml')
         self.assertEqual(0, exit_code)
-        exit_code = self._test_sub_module_run('shell.yaml')
+        exit_code = self._test_sub_module_run('plugin/shell.yaml')
         self.assertEqual(0, exit_code)
-        exit_code = self._test_sub_module_run('export_per_record.yaml')
+        exit_code = self._test_sub_module_run('plugin/export_per_record.yaml')
         self.assertEqual(0, exit_code)

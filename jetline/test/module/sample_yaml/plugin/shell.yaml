@@ -1,0 +1,12 @@
+sub_module:
+  -
+    name: Plugin
+    mode:
+    param:
+      plugin_path: plugin_module
+      package: shell_command
+      class_name: ShellCommand
+      kwargs:
+        command_list:
+          - ls
+          - -l

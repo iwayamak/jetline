@@ -11,8 +11,8 @@ class SubModuleParameter(metaclass=ABCMeta):
             member_ls = self._value_method_name_list()
             for member_name in member_ls:
                 if member_name in params:
-                    v = params[member_name]
-                    setattr(self, member_name, v)
+                    value = params[member_name]
+                    setattr(self, member_name, value)
                 else:
                     setattr(self, member_name, None)
         else:

@@ -1,0 +1,74 @@
+sub_module:
+  -
+    name: PostgreSQLProcessing
+    mode:
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/common/postgresql_drop_table.sql
+      input_value:
+        schema: public
+        table: test_postgresql_copy_to
+  -
+    name: PostgreSQLProcessing
+    mode:
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/common/postgresql_drop_table.sql
+      input_value:
+        schema: public
+        table: test_postgresql_copy_from
+  -
+    name: PostgreSQLProcessing
+    mode:
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/common/postgresql_create_table.sql
+      input_value:
+        schema: public
+        table: test_postgresql_copy_to
+  -
+    name: PostgreSQLProcessing
+    mode:
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/common/postgresql_create_table.sql
+      input_value:
+        schema: public
+        table: test_postgresql_copy_from
+  -
+    name: PostgreSQLProcessing
+    mode:
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/test_postgresql_copy_to_insert_test_data.sql
+      input_value:
+        schema: public
+        table: test_postgresql_copy_to
+  -
+    name: PostgreSQLCopy
+    mode: To
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/test_postgresql_copy_to.sql
+      input_value:
+        schema: public
+        table: test_postgresql_copy_to
+      csv_file_name: test_data/test_postgresql_copy_from_to.csv
+  -
+    name: PostgreSQLCopy
+    mode: From
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      table_name: public.test_postgresql_copy_from
+      use_last_result: True
+      remove_source_file: True
+  -
+    name: PostgreSQLProcessing
+    mode: Count
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/common/postgresql_count.sql
+      input_value:
+        schema: public
+        table: test_postgresql_copy_from
+      assert_eq: 3
