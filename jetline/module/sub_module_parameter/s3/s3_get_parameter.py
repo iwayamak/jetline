@@ -6,12 +6,12 @@ from ..value.option_value import OptionValue
 from ....validator.validator import Validator
 
 
-class S3PutParameter(SubModuleParameter):
+class S3GetParameter(SubModuleParameter):
 
     def __init__(self, params=None):
         self._s3_component_key = None
-        self._local_file_path = None
-        self._s3_dir_path = None
+        self._s3_file_path = None
+        self._local_dir_path = None
         self._end_file_name = None
         super().__init__(params)
 
@@ -25,20 +25,20 @@ class S3PutParameter(SubModuleParameter):
         self._s3_component_key = MustValue(v)
 
     @property
-    def local_file_path(self):
-        return self._local_file_path
+    def s3_file_path(self):
+        return self._s3_file_path
 
-    @local_file_path.setter
-    def local_file_path(self, v):
-        self._local_file_path = OptionValue(v)
+    @s3_file_path.setter
+    def s3_file_path(self, v):
+        self._s3_file_path = OptionValue(v)
 
     @property
-    def s3_dir_path(self):
-        return self._s3_dir_path
+    def local_dir_path(self):
+        return self._local_dir_path
 
-    @s3_dir_path.setter
-    def s3_dir_path(self, v):
-        self._s3_dir_path = MustValue(v)
+    @local_dir_path.setter
+    def local_dir_path(self, v):
+        self._local_dir_path = MustValue(v)
 
     @property
     def end_file_name(self):

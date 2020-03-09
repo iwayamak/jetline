@@ -21,7 +21,7 @@ class S3Put(SubModule):
                 self._parameter.s3_component_key.get()
             )
         queue = CommandQueue()
-        file_path_list = glob.glob(self._parameter.file_path.get(), recursive=True)
+        file_path_list = glob.glob(self._parameter.local_file_path.get(), recursive=True)
 
         # end file
         end_file_name = self._parameter.end_file_name.get()
