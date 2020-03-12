@@ -18,4 +18,4 @@ class S3ListCommand(S3Command):
         super().run()
         summary_iter = self._bucket.objects.filter(Prefix=self._prefix)
         for k in summary_iter:
-            self._object_list.append(k.key)
+            self._object_list.append(k)

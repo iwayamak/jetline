@@ -1,0 +1,14 @@
+sub_module:
+  -
+    name: S3
+    mode: Put
+    param:
+      s3_component_key: S3_COMPONENT.ID=UT
+      local_file_path: test_data/test_s3_*.csv
+      s3_dir_path: test_s3_list
+  -
+    name: S3
+    mode: List
+    param:
+      s3_component_key: S3_COMPONENT.ID=UT
+      s3_file_path: test_s3_list/test_s3_*.csv

@@ -117,6 +117,10 @@ class TestModule(BaseTestCase):
         exit_code = self._test_sub_module_run('s3/test_s3_get.yaml')
         self.assertEqual(0, exit_code)
 
+    def test_s3_list(self):
+        exit_code = self._test_sub_module_run('s3/test_s3_list.yaml')
+        self.assertEqual(0, exit_code)
+
     def test_plugin_run(self):
         exit_code = self._test_sub_module_run('plugin/test_plugin.yaml')
         self.assertEqual(0, exit_code)

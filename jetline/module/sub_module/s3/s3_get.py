@@ -28,7 +28,8 @@ class S3Get(SubModule):
             component, prefix, object_list
         )
         command.execute()
-        file_path_list = fnmatch.filter(object_list, self._parameter.s3_file_path.get())
+        key_list = [s3_object.key for s3_object in object_list]
+        file_path_list = fnmatch.filter(key_list, self._parameter.s3_file_path.get())
 
         for file_path in file_path_list:
             queue.add_command(

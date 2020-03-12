@@ -54,7 +54,7 @@ class TestS3ListCommand(BaseTestCase):
         command.execute()
         for i, test_data_path in enumerate(TEST_DATA_PATH_LIST):
             self.assertEqual(
-                object_list[i],
+                object_list[i].key,
                 f'test_s3_list_command/{os.path.basename(test_data_path)}'
             )
         self.assertEqual(len(object_list), len(TEST_DATA_PATH_LIST))
