@@ -17,4 +17,4 @@ class Value(metaclass=ABCMeta):
         if self._display is not None:
             return self._display
         else:
-            return ""
+            return ''
