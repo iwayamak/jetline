@@ -1,0 +1,22 @@
+sub_module:
+  -
+    name: Confluence
+    mode: DeletePage
+    param:
+      confluence_component_key: CONFLUENCE_COMPONENT.ID=UT
+      page_title: test_confluence_create_page
+      space_key: SPC
+      headers:
+        content-type: application/json
+  -
+    name: Confluence
+    mode: CreatePage
+    param:
+      confluence_component_key: CONFLUENCE_COMPONENT.ID=UT
+      page_title: test_confluence_create_page
+      space_key: SPC
+      ancestors_id: 2392085
+      headers:
+        content-type: application/json
+      json_file_name: test_data/test_confluence_create_page.json
+      description: Created by test_confluence_create_page

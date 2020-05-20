@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import json
+from json2html import json2html
 from typing import Union
 from ..substr.place_holder import PlaceHolder
 
@@ -39,3 +41,11 @@ class FileUtil(object):
             html_table += '</tr>'
         html_table += '</table>'
         return html_table
+
+    @classmethod
+    def json_to_html(cls, filename: str):
+        with open(filename) as file:
+            data_dict = json.load(file)
+            html_table = json2html.convert(json=data_dict)
+        return html_table
+

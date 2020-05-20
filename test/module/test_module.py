@@ -121,6 +121,10 @@ class TestModule(BaseTestCase):
         exit_code = self._test_sub_module_run('s3/test_s3_list.yaml')
         self.assertEqual(0, exit_code)
 
+    def test_confluence_create_page(self):
+        exit_code = self._test_sub_module_run('api/confluence/test_confluence_create_page.yaml')
+        self.assertEqual(0, exit_code)
+
     def test_plugin_run(self):
         exit_code = self._test_sub_module_run('plugin/test_plugin.yaml')
         self.assertEqual(0, exit_code)
@@ -129,4 +133,8 @@ class TestModule(BaseTestCase):
         exit_code = self._test_sub_module_run('plugin/shell.yaml')
         self.assertEqual(0, exit_code)
         exit_code = self._test_sub_module_run('plugin/export_per_record.yaml')
+        self.assertEqual(0, exit_code)
+
+    def test_get_vm_info(self):
+        exit_code = self._test_sub_module_run('plugin/get_vm_info.yaml')
         self.assertEqual(0, exit_code)

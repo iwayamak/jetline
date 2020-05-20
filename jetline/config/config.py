@@ -7,6 +7,7 @@ class Config(object):
         'PostgreSQLCopy',
         'LocalProcessing',
         'S3',
+        'Confluence',
         'Plugin'
     )
 
