@@ -14,7 +14,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
         self._space_key = 'SPC'
         self._ancestors_id = '2392085'
         self._headers = {'content-type': 'application/json'}
-        self._json_filename = \
+        self._json_file_name = \
             os.path.join(
                 os.path.dirname(__file__),
                 'test_data',
@@ -31,7 +31,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
                 'space_key': self._space_key,
                 'ancestors_id': self._ancestors_id,
                 'headers': self._headers,
-                'json_filename': self._json_filename,
+                'json_file_name': self._json_file_name,
                 'description': self._description
             }
         )
@@ -40,7 +40,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
         self.assertEqual(self._space_key, param.space_key.get())
         self.assertEqual(self._ancestors_id, param.ancestors_id.get())
         self.assertEqual(self._headers, param.headers.get())
-        self.assertEqual(self._json_filename, param.json_filename.get())
+        self.assertEqual(self._json_file_name, param.json_file_name.get())
         self.assertEqual(self._description, param.description.get())
 
     def test_must_parameter(self):
@@ -51,7 +51,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
                 'space_key': self._space_key,
                 'ancestors_id': self._ancestors_id,
                 'headers': self._headers,
-                'json_filename': self._json_filename
+                'json_file_name': self._json_file_name
             }
         )
         self.assertEqual(self._component, param.confluence_component_key.get())
@@ -59,7 +59,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
         self.assertEqual(self._space_key, param.space_key.get())
         self.assertEqual(self._ancestors_id, param.ancestors_id.get())
         self.assertEqual(self._headers, param.headers.get())
-        self.assertEqual(self._json_filename, param.json_filename.get())
+        self.assertEqual(self._json_file_name, param.json_file_name.get())
         self.assertEqual('Please enter a description.', param.description.get())
 
     def test_component_not_set(self):
@@ -70,7 +70,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
                     'space_key': self._space_key,
                     'ancestors_id': self._ancestors_id,
                     'headers': self._headers,
-                    'json_filename': self._json_filename
+                    'json_file_name': self._json_file_name
                 }
             )
 
@@ -82,7 +82,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
                     'space_key': self._space_key,
                     'ancestors_id': self._ancestors_id,
                     'headers': self._headers,
-                    'json_filename': self._json_filename
+                    'json_file_name': self._json_file_name
                 }
             )
 
@@ -94,7 +94,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
                     'page_title': self._page_title,
                     'ancestors_id': self._ancestors_id,
                     'headers': self._headers,
-                    'json_filename': self._json_filename
+                    'json_file_name': self._json_file_name
                 }
             )
 
@@ -106,7 +106,7 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
                     'page_title': self._page_title,
                     'space_key': self._space_key,
                     'headers': self._headers,
-                    'json_filename': self._json_filename
+                    'json_file_name': self._json_file_name
                 }
             )
 
@@ -118,11 +118,11 @@ class TestConfluenceCreatePageParameter(BaseTestCase):
                     'page_title': self._page_title,
                     'space_key': self._space_key,
                     'ancestors_id': self._ancestors_id,
-                    'json_filename': self._json_filename
+                    'json_file_name': self._json_file_name
                 }
             )
 
-    def test_json_filename_not_set(self):
+    def test_json_file_name_not_set(self):
         with self.assertRaises(SubModuleParameterError):
             ConfluenceCreatePageParameter(
                 {

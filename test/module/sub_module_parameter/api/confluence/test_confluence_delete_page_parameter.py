@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from jetline.module.sub_module_parameter.api.confluence.confluence_create_delete_parameter import ConfluenceDeletePageParameter
+from jetline.module.sub_module_parameter.api.confluence.confluence_delete_page_parameter import ConfluenceDeletePageParameter
 from jetline.exception.sub_module_parameter_error import SubModuleParameterError
 from test.abc.base_test_case import BaseTestCase
 
