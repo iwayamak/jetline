@@ -8,10 +8,9 @@ class PathUtil(object):
     SETTINGS_DIR = 'settings'
     COMPONENT_DIR = 'component'
     LOGGING_CONF = 'logging_config.yaml'
-    RESULT_YAML = 'result.yaml'
 
     @classmethod
-    def framework_root_path(cls):
+    def jetline_root_path(cls):
         return os.path.split(os.path.split(os.path.dirname(os.path.abspath(__file__)))[0])[0]
 
     @classmethod

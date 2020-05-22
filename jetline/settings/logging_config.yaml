@@ -9,10 +9,12 @@ handlers:
     formatter: simple
     stream: ext://sys.stdout
   file:
-    class: logging.handlers.RotatingFileHandler
+    class: logging.handlers.TimedRotatingFileHandler
     formatter: simple
-    filename: /tmp/logs/{{batch_name}}.log
-    backupCount: 3
+    filename: {{jetline_root}}/logs/{{batch_name}}.log
+    when: midnight
+    backupCount: 31
+    encoding: utf-8
 loggers:
   jetline:
     level: DEBUG

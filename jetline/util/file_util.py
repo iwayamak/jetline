@@ -46,6 +46,6 @@ class FileUtil(object):
     def json_to_html(cls, filename: str):
         with open(filename) as file:
             data_dict = json.load(file)
-            html_table = json2html.convert(json=data_dict)
+            html_table = json2html.convert(json=data_dict, escape=False)
         return html_table
 

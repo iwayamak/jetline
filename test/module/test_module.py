@@ -134,7 +134,3 @@ class TestModule(BaseTestCase):
         self.assertEqual(0, exit_code)
         exit_code = self._test_sub_module_run('plugin/export_per_record.yaml')
         self.assertEqual(0, exit_code)
-
-    def test_get_vm_info(self):
-        exit_code = self._test_sub_module_run('plugin/get_vm_info.yaml')
-        self.assertEqual(0, exit_code)

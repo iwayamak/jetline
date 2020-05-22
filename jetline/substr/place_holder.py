@@ -4,6 +4,7 @@ import os
 from jinja2 import Environment, FileSystemLoader
 from ..substr.template_string.template_string import TemplateString
 from ..share_parameter.share_parameter import ShareParameter
+from ..util.path_util import PathUtil
 
 
 class PlaceHolder(object):
@@ -27,7 +28,8 @@ class PlaceHolder(object):
                 'batch_name': ShareParameter.batch_name,
                 'exec_date': TemplateString.exec_date,
                 'log_dir': ShareParameter.log_dir,
-                'timestamp': TemplateString.timestamp
+                'timestamp': TemplateString.timestamp,
+                'jetline_root': PathUtil.jetline_root_path()
             }
         )
         env = Environment(

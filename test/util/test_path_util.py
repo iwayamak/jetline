@@ -10,8 +10,8 @@ class TestPathUtil(BaseTestCase):
         super().__init__(*args, **kwargs)
 
     def test_framework_root_path(self):
-        framework_root_path = PathUtil.framework_root_path()
-        self.assertTrue(os.path.exists(framework_root_path))
+        jetline_root_path = PathUtil.jetline_root_path()
+        self.assertTrue(os.path.exists(jetline_root_path))
 
     def test_settings_root_path(self):
         settings_root_path = PathUtil.settings_root_path()
