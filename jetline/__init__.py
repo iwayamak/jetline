@@ -1,1 +1,5 @@
-__author__ = '00991484'
+__copyright__ = 'Copyright (C) 2020 Katsuya Iwayama'
+__version__ = '2020.1'
+__license__ = 'BSD-3-Clause'
+__author__ = 'Katsuya Iwayama'
+__author_email__ = 'iwayamak@matsubabreak.com'
