@@ -29,3 +29,9 @@ class PathUtil(object):
     @classmethod
     def logging_conf_path(cls):
         return os.path.join(cls.settings_root_path(), cls.LOGGING_CONF)
+
+    @classmethod
+    def mkdir_if_not_exists(cls, path):
+        dir_path = os.path.dirname(path) if os.path.isfile(path) else path
+        if not os.path.exists(dir_path):
+            os.mkdir(dir_path)

@@ -1,4 +1,4 @@
 /test/module/cover/
-jobs/
+jobs/*
 .coverage
-/logs/
+logs/*

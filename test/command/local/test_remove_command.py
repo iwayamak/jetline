@@ -2,6 +2,7 @@
 
 import os
 from jetline.command.local.remove_command import RemoveCommand
+from jetline.util.path_util import PathUtil
 from jetline.share_parameter.share_parameter import ShareParameter
 from test.abc.base_test_case import BaseTestCase
 
@@ -31,8 +32,7 @@ class TestRemoveCommand(BaseTestCase):
             os.path.dirname(__file__),
             'test_remove_command_dir'
         )
-        if not os.path.exists(directory_path):
-            os.mkdir(directory_path)
+        PathUtil.mkdir_if_not_exists(directory_path)
         command2 = RemoveCommand(directory_path)
         command2.execute()
         self.assertFalse(os.path.exists(directory_path))

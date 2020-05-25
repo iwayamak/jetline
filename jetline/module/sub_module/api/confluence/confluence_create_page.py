@@ -24,7 +24,7 @@ class ConfluenceCreatePage(SubModule):
                 self._parameter.space_key.get(),
                 self._parameter.ancestors_id.get(),
                 self._parameter.headers.get(),
-                FileUtil.json_to_html(
+                FileUtil.json_to_html_table(
                     self._parameter.json_file_name.get()
                 ),
                 self._parameter.description.get()
