@@ -51,10 +51,7 @@ class PostgreSQLCopyFromCommand(PostgreSQLCommand):
 
     def run(self):
         super().run()
-        if self._gzip:
-            module, mode = [gzip, 'rt']
-        else:
-            module, mode = [builtins, 'r']
+        module, mode = [gzip, 'rt'] if self._gzip else [builtins, 'r']
 
         for csv_file_name in self._csv_file_name_list:
             logger.info(f'Loading from {csv_file_name}')

@@ -1,0 +1,4 @@
+-r common.txt
+nose
+coverage==5.1
+freezegun==0.3.15
