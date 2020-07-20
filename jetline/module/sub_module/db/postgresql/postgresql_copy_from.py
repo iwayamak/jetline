@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import glob
 from ...abc.sub_module import SubModule
 from ....sub_module_parameter.db.postgresql.postgresql_copy_from_parameter import PostgreSQLCopyFromParameter
 from .....command.command_queue import CommandQueue
@@ -15,7 +16,7 @@ class PostgreSQLCopyFrom(SubModule):
         super().__init__(param)
 
     def run(self):
-        csv_file_name_list = [self._parameter.csv_file_name.get()]
+        csv_file_name_list = glob.glob(self._parameter.csv_file_name.get())
         if self._parameter.use_last_result.get():
             csv_file_name_list = \
                 ShareParameter.sub_module_result.get_last_log_local_data_file_list()
