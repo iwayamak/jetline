@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import os
 from ..abc.sub_module import SubModule
 from ...sub_module_parameter.scp.scp_get_parameter import ScpGetParameter
 from ....command.scp.scp_get_command import ScpGetCommand
+from ....util.path_util import PathUtil
 from ....container.container import Container
 
 
@@ -17,7 +19,7 @@ class ScpGet(SubModule):
                 self._parameter.scp_component_key.get()
             )
         object_list = []
-
+        PathUtil.mkdir_if_not_exists(self._parameter.local_dir_path.get())
         command = \
             ScpGetCommand(
                 component,
