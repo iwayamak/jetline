@@ -7,23 +7,20 @@ from .abc.component import Component
 logger = logging.getLogger('jetline')
 
 
-class PostgreSQLComponent(Component):
+class ScpComponent(Component):
 
     def __init__(self, param):
         self._user = param['user']
         self._password = param['password']
         self._host = param['host']
         self._port = param['port']
-        self._database = param['database']
-        self._schema = param['schema']
         Component.__init__(self)
 
     def _validation(self):
         if self._user is None or self._password is None or \
-                self._host is None or self._port is None or \
-                self._database is None or self._schema is None:
+                self._host is None or self._port is None:
             raise Exception(
-                'user / password / host / port / database / schema is None!'
+                'user / password / host / port is None!'
             )
 
     @property
@@ -42,23 +39,15 @@ class PostgreSQLComponent(Component):
     def port(self):
         return self._port
 
-    @property
-    def database(self):
-        return self._database
-
-    @property
-    def schema(self):
-        return self._schema
-
     @classmethod
     def create_component(cls, param):
-        instance = PostgreSQLComponent(param)
+        instance = ScpComponent(param)
         cls._output_log(instance.__dict__)
         return instance
 
     @classmethod
     def _output_log(cls, instance_dict: dict):
         log_dict = copy.deepcopy(instance_dict)
-        log_dict['_password'] = '****'
+        log_dict["_password"] = '****'
         logger.info(f'created {cls.__name__}')
         logger.info(log_dict)

@@ -8,6 +8,7 @@ class Config(object):
         'LocalProcessing',
         'S3',
         'Confluence',
+        'Scp',
         'Plugin'
     )
 

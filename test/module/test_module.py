@@ -121,6 +121,14 @@ class TestModule(BaseTestCase):
         exit_code = self._test_sub_module_run('s3/test_s3_list.yaml')
         self.assertEqual(0, exit_code)
 
+    def test_scp_get(self):
+        exit_code = self._test_sub_module_run('scp/test_scp_get.yaml')
+        self.assertEqual(0, exit_code)
+
+    def test_scp_put(self):
+        exit_code = self._test_sub_module_run('scp/test_scp_put.yaml')
+        self.assertEqual(0, exit_code)
+
     def test_confluence_create_page(self):
         exit_code = self._test_sub_module_run('api/confluence/test_confluence_create_page.yaml')
         self.assertEqual(0, exit_code)
