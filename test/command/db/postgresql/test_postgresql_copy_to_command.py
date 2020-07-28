@@ -279,7 +279,7 @@ class TestPostgreSQLCopyToCommand(BaseTestCase):
         encoding = 'utf8'
         command = PostgreSQLCopyToCommand(
             COMPONENT, self._sql_str, output_csv_file_name, delimiter,
-            null_str, header, quote, escape, force_quote_list ,encoding ,gzip_mode
+            null_str, header, quote, escape, force_quote_list, encoding, gzip_mode
         )
         command.execute()
         self.assertTrue(filecmp.cmp(sample_csv_file_name, output_csv_file_name))
