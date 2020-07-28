@@ -22,6 +22,7 @@ RUN pip3 install --upgrade -r /opt/app/jetline/requirements.txt
 RUN mkdir -p /opt/app/jetline/logs
 
 # set python path
+ENV TZ Asia/Tokyo
 ENV PYTHONPATH /opt/app/:/opt/app/jetline
 
 # set entry point
