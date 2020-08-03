@@ -10,10 +10,10 @@ logger = logging.getLogger('jetline')
 class ScpComponent(Component):
 
     def __init__(self, param):
-        self._user = param['user']
-        self._password = param['password']
-        self._host = param['host']
-        self._port = param['port']
+        self._user = param.get('user')
+        self._password = param.get('password')
+        self._host = param.get('host')
+        self._port = param.get('port')
         Component.__init__(self)
 
     def _validation(self):

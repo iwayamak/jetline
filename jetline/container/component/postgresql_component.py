@@ -10,12 +10,12 @@ logger = logging.getLogger('jetline')
 class PostgreSQLComponent(Component):
 
     def __init__(self, param):
-        self._user = param['user']
-        self._password = param['password']
-        self._host = param['host']
-        self._port = param['port']
-        self._database = param['database']
-        self._schema = param['schema']
+        self._user = param.get('user')
+        self._password = param.get('password')
+        self._host = param.get('host')
+        self._port = param.get('port')
+        self._database = param.get('database')
+        self._schema = param.get('schema')
         Component.__init__(self)
 
     def _validation(self):

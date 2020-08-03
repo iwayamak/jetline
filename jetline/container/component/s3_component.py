@@ -10,10 +10,10 @@ logger = logging.getLogger('jetline')
 class S3Component(Component):
 
     def __init__(self, param):
-        self._bucket = param['bucket']
-        self._aws_access_key = param['aws_access_key']
-        self._aws_secret_access_key = param['aws_secret_access_key']
-        self._region_name = param['region_name']
+        self._bucket = param.get('bucket')
+        self._aws_access_key = param.get('aws_access_key')
+        self._aws_secret_access_key = param.get('aws_secret_access_key')
+        self._region_name = param.get('region_name')
         Component.__init__(self)
 
     def _validation(self):

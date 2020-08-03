@@ -10,9 +10,9 @@ logger = logging.getLogger('jetline')
 class ConfluenceComponent(Component):
 
     def __init__(self, param):
-        self._url = param['url']
-        self._user = param['user']
-        self._password = param['password']
+        self._url = param.get('url')
+        self._user = param.get('user')
+        self._password = param.get('password')
         Component.__init__(self)
 
     def _validation(self):

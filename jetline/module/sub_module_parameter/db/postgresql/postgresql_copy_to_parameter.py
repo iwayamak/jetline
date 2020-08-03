@@ -105,7 +105,7 @@ class PostgreSQLCopyToParameter(SubModuleParameter):
 
     @encoding.setter
     def encoding(self, v):
-        self._encoding = OptionValue(v, default='utf8')
+        self._encoding = OptionValue(v, default='utf-8')
 
     @property
     def gzip(self):

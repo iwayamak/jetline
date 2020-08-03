@@ -65,7 +65,7 @@ class TestPostgreSQLCopyToParameter(BaseTestCase):
         self.assertEqual('"', param.escape.get())
         self.assertEqual(False, param.gzip.get())
         self.assertEqual(None, param.force_quote_list.get())
-        self.assertEqual('utf8', param.encoding.get())
+        self.assertEqual('utf-8', param.encoding.get())
 
     def test_component_not_set(self):
         with self.assertRaises(SubModuleParameterError):

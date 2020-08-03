@@ -23,6 +23,7 @@ class PostgreSQLCommand(DbCommand):
                 host=self.component.host,
                 port=self.component.port
             )
+        self._connection.set_client_encoding('utf-8')
         super().run()
 
     def _query_builder(self):
