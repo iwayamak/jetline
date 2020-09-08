@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from retry import retry
 from ..parser.kicker_args_parser import KickerArgsParser
 from ..util.yaml_util import YamlUtil
 from ..share_parameter.share_parameter import ShareParameter
@@ -9,6 +10,11 @@ from ..module.sub_module.sub_module_creator import SubModuleCreator
 from ..config.config import Config
 
 logger = logging.getLogger('jetline')
+tries = 0
+delay = 0
+backoff = 0
+jitter = None
+max_delay = 0
 
 
 class Module(object):
@@ -46,9 +52,18 @@ class Module(object):
                 self._sub_module_obj_list.append(sub_module_obj)
 
     def execute(self):
-        for seq, sub_module_obj in enumerate(self._sub_module_obj_list):
-            logger.info(f'seq {seq + 1}: {type(sub_module_obj).__name__}')
-            sub_module_obj.execute()
+        ShareParameter.tries_count = 0
+
+        @retry(tries=tries, delay=delay, backoff=backoff, jitter=jitter, max_delay=max_delay, logger=logging)
+        def _execute():
+            ShareParameter.tries_count += 1
+            if ShareParameter.tries_count > 1:
+                logger.info(f'Try count is {ShareParameter.tries_count}')
+            for seq, sub_module_obj in enumerate(self._sub_module_obj_list):
+                logger.info(f'seq {seq + 1}: {type(sub_module_obj).__name__}')
+                sub_module_obj.execute()
+
+        _execute()
 
     def tear_down(self):
         pass
@@ -57,4 +72,9 @@ class Module(object):
     def parse_kick_args(cls, argv):
         k = KickerArgsParser(argv)
         ShareParameter.dry_run_mode = k.dry_run()
+        globals().update({'tries': k.tries()})
+        globals().update({'delay': k.delay()})
+        globals().update({'backoff': k.backoff()})
+        globals().update({'jitter': k.jitter()})
+        globals().update({'max_delay': k.max_delay()})
         return k.exec_yaml_path(), k.exec_date(), k.working_dir()

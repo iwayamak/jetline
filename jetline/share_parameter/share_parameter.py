@@ -13,3 +13,4 @@ class ShareParameter(object):
     working_dir = None
     success_return_code = 0
     error_return_code = 1
+    tries_count = 0

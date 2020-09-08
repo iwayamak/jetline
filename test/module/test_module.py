@@ -47,7 +47,8 @@ class TestModule(BaseTestCase):
         ShareParameter.error_return_code = 1
 
     @staticmethod
-    def _test_sub_module_run(yaml_file_name: str, dry_run: bool = False):
+    def _test_sub_module_run(yaml_file_name: str, dry_run: bool = False, tries: int = None, delay: int = None,
+                             backoff: int = None, jitter: tuple = None, max_delay: any = None):
         os.chdir(os.path.dirname(__file__))
         yaml_file_path = \
             os.path.join(
@@ -56,8 +57,13 @@ class TestModule(BaseTestCase):
             )
         date = datetime.now().strftime('%Y%m%d')
         args = ['-y', yaml_file_path, '-d', date, '-w', os.path.dirname(yaml_file_path)]
-        if dry_run:
-            args.extend(['-D'])
+        if dry_run: args.extend(['-D'])
+        if tries is not None: args.extend(['-t', str(tries)])
+        if delay is not None: args.extend(['-l', str(delay)])
+        if backoff is not None: args.extend(['-b', str(backoff)])
+        if jitter is not None: args.extend(['-j', str(jitter)])
+        if max_delay is not None: args.extend(['-m', str(max_delay)])
+
         try:
             exec_yaml, exec_date, working_dir = Module.parse_kick_args(args)
             os.chdir(working_dir)
@@ -74,12 +80,17 @@ class TestModule(BaseTestCase):
             exit_code = ShareParameter.error_return_code
         return exit_code
 
-    def tearDown(self):
+    @classmethod
+    def setUpClass(cls) -> None:
+        # create table for test
+        TestModule._test_sub_module_run('setup/create_test_table.yaml')
+
+    @classmethod
+    def tearDownClass(cls) -> None:
         # remove result.yaml
         for f in glob.glob(os.path.join(os.path.dirname(__file__), 'test_*_result.yaml')):
             if os.path.isfile(f):
                 os.remove(f)
-        super().tearDown()
 
     def test_postgresql_processing_run(self):
         exit_code = self._test_sub_module_run('db/postgresql/test_postgresql_processing.yaml')
@@ -128,6 +139,15 @@ class TestModule(BaseTestCase):
     def test_scp_put(self):
         exit_code = self._test_sub_module_run('scp/test_scp_put.yaml')
         self.assertEqual(0, exit_code)
+
+    def test_retry(self):
+        exit_code = self._test_sub_module_run('cmn/test_retry.yaml', tries=2, jitter=(1, 3))
+        self.assertEqual(0, exit_code)
+
+    def test_retry_failure(self):
+        exit_code = self._test_sub_module_run('cmn/test_retry_failure.yaml', tries=5, jitter=(2, 5), max_delay=10)
+        self.assertEqual(1, exit_code)
+        self.assertEqual(5, ShareParameter.tries_count)
 
     def test_confluence_create_page(self):
         exit_code = self._test_sub_module_run('api/confluence/test_confluence_create_page.yaml')

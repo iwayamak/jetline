@@ -44,4 +44,3 @@ class DbCommand(Command, metaclass=ABCMeta):
     @abstractmethod
     def _mask_password(self):
         pass
-
