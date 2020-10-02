@@ -8,7 +8,6 @@ from ..util.path_util import PathUtil
 
 
 class PlaceHolder(object):
-
     def __init__(self, filename: str, input_value: dict):
         self._filename = filename
         self._input_value = input_value

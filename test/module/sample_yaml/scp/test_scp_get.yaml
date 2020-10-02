@@ -37,7 +37,7 @@ sub_module:
     param:
       scp_component_key: SCP_COMPONENT.ID=UT
       remote_path: /tmp/test_data
-      local_dir_path: 'test_data_recursive'
+      local_dir_path: test_data_recursive
       recursive: True
   -
     name: LocalProcessing
