@@ -1,0 +1,4 @@
+id,str_column,date_column
+1,"ABCDEF","2020-04-01"
+2,"GHIJKL","2020-04-01"
+3,,"2020-04-01"

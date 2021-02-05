@@ -1,0 +1,13 @@
+sub_module:
+  -
+    name: Plugin
+    mode:
+    param:
+      plugin_path: plugin_module
+      package: column_join_command
+      class_name: ColumnJoinCommand
+      kwargs:
+        target_files:
+          - test_data/column_join_01.csv
+          - test_data/column_join_02.csv
+        result_file: test_data/column_join.csv

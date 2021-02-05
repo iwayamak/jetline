@@ -1,0 +1,1 @@
+{{exec_date('%Y%m%d')}} {{elem_1}} {{elem_2}}

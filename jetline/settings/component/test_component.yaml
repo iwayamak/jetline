@@ -1,0 +1,24 @@
+POSTGRESQL_COMPONENT.ID=TEST_COMPONENT:
+  class: PostgreSQLComponent
+  database: test_database
+  schema: test_schema
+  user: test_user
+  password: test_password
+  host: test_host
+  port: 5432
+
+SCP_COMPONENT.ID=TEST_COMPONENT:
+  class: ScpComponent
+  user: test_user
+  password: test_password
+  host: test_host
+  port: 22
+
+MYSQL_COMPONENT.ID=TEST_COMPONENT:
+  class: MySQLComponent
+  database: test_database
+  schema: test_schema
+  user: test_user
+  password: test_password
+  host: test_host
+  port: 3306

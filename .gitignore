@@ -1,0 +1,5 @@
+/jobs/*
+/logs/*
+.coverage
+/test/cover/
+/test/.noseids

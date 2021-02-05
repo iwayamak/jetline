@@ -1,0 +1,1 @@
+select num_column / num_column from retry_test;

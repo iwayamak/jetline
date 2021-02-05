@@ -1,0 +1,48 @@
+sub_module:
+  -
+    name: Scp
+    mode: Put
+    param:
+      scp_component_key: SCP_COMPONENT.ID=UT
+      local_path: test_data/test_scp_*.csv
+      remote_dir_path: /tmp
+  -
+    name: Scp
+    mode: Put
+    param:
+      scp_component_key: SCP_COMPONENT.ID=UT
+      local_path: test_data/
+      remote_dir_path: /tmp
+      recursive: True
+      preserve_time: True
+  -
+    name: Scp
+    mode: Get
+    param:
+      scp_component_key: SCP_COMPONENT.ID=UT
+      remote_path: /tmp/test_scp_0*.csv
+      local_dir_path: .
+      preserve: True
+  -
+    name: Scp
+    mode: Get
+    param:
+      scp_component_key: SCP_COMPONENT.ID=UT
+      remote_path: /tmp/test_scp_10.csv
+      local_dir_path: .
+      preserve: True
+  -
+    name: Scp
+    mode: Get
+    param:
+      scp_component_key: SCP_COMPONENT.ID=UT
+      remote_path: /tmp/test_data
+      local_dir_path: test_data_recursive
+      recursive: True
+  -
+    name: LocalProcessing
+    mode: Remove
+    param:
+      path_list:
+        - test_scp_*.csv
+        - test_data_recursive

@@ -1,0 +1,13 @@
+sub_module:
+  -
+    name: PostgreSQLProcessing
+    mode:
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/test_retry_update.sql
+  -
+    name: PostgreSQLProcessing
+    mode:
+    param:
+      postgresql_component_key: POSTGRESQL_COMPONENT.ID=UT
+      sql_file_name: sql/test_retry_select.sql

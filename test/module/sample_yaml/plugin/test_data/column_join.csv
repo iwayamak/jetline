@@ -1,0 +1,4 @@
+id,str_column,date_column,id,str_column,date_column
+1,MNOPQR,2020-04-02,1,ABCDEF,2020-04-01
+2,STUVWX,2020-04-02,2,GHIJKL,2020-04-01
+3,YZABCD,2020-04-02,3,,2020-04-01
