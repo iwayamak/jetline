@@ -1,5 +1,6 @@
 /jobs/*
 /logs/*
+/settings/*
 .coverage
 /test/cover/
 /test/.noseids

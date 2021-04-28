@@ -5,20 +5,20 @@ sub_module:
     param:
       scp_component_key: SCP_COMPONENT.ID=UT
       local_path: test_data/test_scp_01.csv
-      remote_dir_path: /tmp
+      remote_dir_path: /var/tmp
   -
     name: Scp
     mode: Put
     param:
       scp_component_key: SCP_COMPONENT.ID=UT
       local_path: test_data/test_scp_0*.csv
-      remote_dir_path: /tmp
+      remote_dir_path: /var/tmp
   -
     name: Scp
     mode: Put
     param:
       scp_component_key: SCP_COMPONENT.ID=UT
       local_path: test_data
-      remote_dir_path: /tmp
+      remote_dir_path: /var/tmp
       recursive: True
       preserve_time: True

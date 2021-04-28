@@ -30,7 +30,7 @@ class PostgreSQLCopyToCommand(PostgreSQLCommand):
         if force_quote_list is not None:
             force_quote = ','.join(force_quote_list)
         self._data = {
-            'sql_str': sql_str.rstrip(';'),
+            'sql_str': sql_str.rstrip().rstrip(';'),
             'csv_file_name': csv_file_name,
             'delimiter': delimiter,
             'null_str': null_str,

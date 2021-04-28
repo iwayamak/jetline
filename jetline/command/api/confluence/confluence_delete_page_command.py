@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-import json
 import logging
-from jinja2 import Environment, FileSystemLoader
 from .abc.confluence_command import ConfluenceCommand
 from ....container.component.abc.component import Component
-from ....util.file_util import FileUtil
 
 logger = logging.getLogger('jetline')
 
