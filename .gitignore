@@ -1,6 +1,6 @@
 /jobs/*
 /logs/*
-/settings/*
+/jetline/settings/*
 .coverage
 /test/cover/
 /test/.noseids
