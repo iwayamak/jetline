@@ -15,12 +15,17 @@ class PathUtil(object):
 
     @classmethod
     def settings_root_path(cls):
-        path = os.path.split(
-            os.path.dirname(
-                os.path.abspath(__file__)
-            )
-        )[0]
-        return os.path.join(path, cls.SETTINGS_DIR)
+        key = os.getenv('JETLINE_SETTINGS')
+        if key and os.path.exists(key):
+            path = key
+        else:
+            path = os.path.split(
+                os.path.dirname(
+                    os.path.abspath(__file__)
+                )
+            )[0]
+            os.path.join(path, cls.SETTINGS_DIR)
+        return path
 
     @classmethod
     def component_path(cls):

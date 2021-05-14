@@ -12,10 +12,8 @@ logger = logging.getLogger('jetline')
 class ExportPerRecord(PostgreSQLCommand):
 
     def __init__(self, kwargs: dict):
-        component = \
-            Container.component(kwargs['component_key'])
-        sql_str = \
-            FileUtil.file_to_str(kwargs['sql_file_name'])
+        component = Container.component(kwargs['component_key'])
+        sql_str = FileUtil.file_to_str(kwargs['sql_file_name'])
         self._output_dir = kwargs['output_dir']
         super().__init__(component, sql_str)
 
