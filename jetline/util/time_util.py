@@ -1,63 +1,80 @@
-# -*- coding: utf-8 -*-
+"""日時操作ユーティリティ。."""
 
 import time
-from typing import List, Union
 from datetime import datetime
+
 from dateutil import relativedelta
 
 
-class TimeUtil(object):
+class TimeUtil:
+    """日付文字列変換と日時演算を提供する。."""
 
     @classmethod
     def current_yyyymmddhhmiss(cls) -> str:
-        return datetime.now().strftime('%Y%m%d%H%M%S')
+        """現在日時を `YYYYMMDDHHMISS` で返す。."""
+        return datetime.now().strftime("%Y%m%d%H%M%S")
 
     @classmethod
     def current_yyyymmdd(cls) -> str:
-        return datetime.now().strftime('%Y%m%d')
+        """現在日付を `YYYYMMDD` で返す。."""
+        return datetime.now().strftime("%Y%m%d")
 
     @classmethod
     def datetime_object_from_yyyymmdd_str(cls, tstr: str) -> datetime:
-        return datetime.strptime(tstr, '%Y%m%d')
+        """`YYYYMMDD` 文字列を datetime へ変換する。."""
+        return datetime.strptime(tstr, "%Y%m%d")
 
     @classmethod
     def yyyymmdd_str(cls, dt: datetime) -> str:
-        return dt.strftime('%Y%m%d')
+        """Datetime を `YYYYMMDD` 文字列へ変換する。."""
+        return dt.strftime("%Y%m%d")
 
     @classmethod
-    def datetime_list(cls, fr_str_yyyymmdd: str,
-                      to_str_yyyymmdd: Union[str, None]) -> List[datetime]:
-        dt_lst = []
+    def datetime_list(cls, fr_str_yyyymmdd: str, to_str_yyyymmdd: str | None) -> list[datetime]:
+        """開始日から終了日までの日付配列を返す。."""
         if to_str_yyyymmdd is None:
-            dt_lst.append(
-                TimeUtil.datetime_object_from_yyyymmdd_str(
-                    fr_str_yyyymmdd
-                )
+            return [cls.datetime_object_from_yyyymmdd_str(fr_str_yyyymmdd)]
+
+        date_list: list[datetime] = []
+        target_date_str = fr_str_yyyymmdd
+        while True:
+            target_date = cls.datetime_object_from_yyyymmdd_str(target_date_str)
+            date_list.append(target_date)
+            if target_date_str == to_str_yyyymmdd:
+                break
+            target_date_str = cls.yyyymmdd_str(
+                target_date + relativedelta.relativedelta(days=1)
             )
-        else:
-            target_date_str = fr_str_yyyymmdd
-            while True:
-                target_date = \
-                    TimeUtil.datetime_object_from_yyyymmdd_str(
-                        target_date_str
-                    )
-                dt_lst.append(target_date)
-                if target_date_str == to_str_yyyymmdd:
-                    break
-                target_date_str = \
-                    TimeUtil.yyyymmdd_str(
-                        target_date + relativedelta.relativedelta(days=1)
-                    )
-        return list(dt_lst)
+        return date_list
 
     @classmethod
     def get_unix_time(cls, target_date: datetime) -> int:
+        """Datetime の UNIX 時刻を返す。."""
         return int(time.mktime(target_date.timetuple()))
 
     @classmethod
-    def datetime_delta(cls, target_date: datetime, years: int = 0, months: int = 0, days: int = 0, leapdays: int = 0,
-                       weeks: int = 0, hours: int = 0, minutes: int = 0, seconds: int = 0,
-                       microseconds: int = 0) -> datetime:
-        return target_date + relativedelta.relativedelta(years=years, months=months, days=days, leapdays=leapdays,
-                                                         weeks=weeks, hours=hours, minutes=minutes, seconds=seconds,
-                                                         microseconds=microseconds)
+    def datetime_delta(
+        cls,
+        target_date: datetime,
+        years: int = 0,
+        months: int = 0,
+        days: int = 0,
+        leapdays: int = 0,
+        weeks: int = 0,
+        hours: int = 0,
+        minutes: int = 0,
+        seconds: int = 0,
+        microseconds: int = 0,
+    ) -> datetime:
+        """指定オフセットを加算した datetime を返す。."""
+        return target_date + relativedelta.relativedelta(
+            years=years,
+            months=months,
+            days=days,
+            leapdays=leapdays,
+            weeks=weeks,
+            hours=hours,
+            minutes=minutes,
+            seconds=seconds,
+            microseconds=microseconds,
+        )

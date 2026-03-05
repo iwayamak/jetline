@@ -1,7 +1,10 @@
-# -*- coding: utf-8 -*-
+
+"""API 呼び出しを行うコマンド基底。."""
 
 import logging
+
 import requests
+
 from ....command.abc.command import Command
 from ....container.component.abc.component import Component
 
@@ -9,8 +12,15 @@ logger = logging.getLogger('jetline')
 
 
 class ApiCommand(Command):
+    """HTTP API 呼び出し処理の共通機能を提供する。."""
 
-    def __init__(self, component: Component, timeout=1800):
+    def __init__(self, component: Component, timeout: int = 1800):
+        """API コマンドを初期化する。.
+
+        Args:
+            component: API 接続先コンポーネント。
+            timeout: リクエストタイムアウト秒。
+        """
         self._session = requests.Session()
         self._response = None
         self._timeout = timeout
@@ -18,6 +28,7 @@ class ApiCommand(Command):
         super().__init__(component)
 
     def set_up(self):
+        """接続先 URL を解決し、ログを出力する。."""
         logger.info(f'headers: {self._session.headers}')
 
         self._url = self.component.url
@@ -26,15 +37,17 @@ class ApiCommand(Command):
         super().set_up()
 
     def body(self):
-        super().body()
+        """API 実行前処理を行う。."""
 
     def run(self):
-        super().run()
+        """API コマンド本体はサブクラスで実装する。."""
+        raise NotImplementedError
 
     def dry_run(self):
-        super().dry_run()
+        """ドライラン時は URL のみ解決済み状態にする。."""
 
     def tear_down(self):
+        """セッションとレスポンスをクローズする。."""
         if self._session is not None:
             self._session.close()
         if self._response is not None:
@@ -42,29 +55,29 @@ class ApiCommand(Command):
         super().tear_down()
 
     def _api_get(self, **kwargs):
-        response = self._session.get(
+        """GET リクエストを実行する。."""
+        return self._session.get(
             self._url,
             **kwargs
         )
-        return response
 
     def _api_post(self, **kwargs):
-        response = self._session.post(
+        """POST リクエストを実行する。."""
+        return self._session.post(
             self._url,
             **kwargs
         )
-        return response
 
     def _api_put(self, **kwargs):
-        response = self._session.put(
+        """PUT リクエストを実行する。."""
+        return self._session.put(
             self._url,
             **kwargs
         )
-        return response
 
     def _api_delete(self, **kwargs):
-        response = self._session.delete(
+        """DELETE リクエストを実行する。."""
+        return self._session.delete(
             self._url,
             **kwargs
         )
-        return response

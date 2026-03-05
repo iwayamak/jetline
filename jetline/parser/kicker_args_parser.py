@@ -1,112 +1,210 @@
-# -*- coding: utf-8 -*-
 
-import datetime
+"""CLI 引数を解釈し、実行設定へ変換する。."""
+
 import argparse
+import ast
+import datetime
+from dataclasses import dataclass
+
+JitterType = int | float | tuple[int | float, int | float]
 
 
-class KickerArgsParser(object):
+@dataclass(frozen=True)
+class RetryOptions:
+    """リトライ設定。."""
+
+    tries: int
+    delay: int
+    backoff: int
+    jitter: JitterType
+    max_delay: int | None
+
+
+@dataclass(frozen=True)
+class RunOptions:
+    """ジョブ実行設定。."""
+
+    yaml_file: str
+    exec_date: str
+    dry_run: bool
+    working_dir: str | None
+    retry: RetryOptions
+
+
+class KickerArgsParser:
+    """CLI 引数を実行設定へ変換するパーサ。."""
 
     def __init__(self, args):
-        parser = \
-            argparse.ArgumentParser(
-                prog='kicker.py',
-            )
-        # yaml
+        """引数を解析し、実行設定を構築する。.
+
+        Args:
+            args: CLI引数配列。
+        """
+        parser = argparse.ArgumentParser(
+            prog='jetline',
+            description='Jetline ETL runner',
+        )
         parser.add_argument(
             '-y', '--yaml', dest='yaml_file', required=True,
-            help='yaml file path.'
+            help='yaml ファイルパス。'
         )
-        # exec date
         parser.add_argument(
-            '-d', '--exec-date', dest='exec_date',
+            '-d', '--exec-date', dest='exec_date', type=KickerArgsParser._parse_exec_date,
             default=datetime.datetime.now().strftime('%Y%m%d'),
-            help='execution date in `yyyymmdd` format: e.g. 20200401'
+            help='実行日。形式は yyyymmdd（例: 20260401）'
         )
-        # dry run option
         parser.add_argument(
-            '-D', '--dry-run', action="store_true", default=False,
-            help='perform a dry run'
+            '-D', '--dry-run', action='store_true', default=False,
+            help='dry-run で実行する'
         )
-
-        # working directory
         parser.add_argument(
             '-w', '--working-dir', dest='working_dir', default=None,
-            help='Absolute path or Relative path from Python execution environment'
+            help='実行時の作業ディレクトリ'
         )
-
-        # tries
         parser.add_argument(
-            '-t', '--tries', dest='tries', type=int, default=1,
-            help='the maximum number of attempts. default: 1.'
+            '-t', '--tries', dest='tries', type=KickerArgsParser._positive_int, default=1,
+            help='最大試行回数（1以上）'
         )
-
-        # delay
         parser.add_argument(
-            '-l', '--delay', dest='delay', type=int, default=1,
-            help='initial delay between attempts. default: 1.'
+            '-l', '--delay', dest='delay', type=KickerArgsParser._non_negative_int, default=1,
+            help='初回待機秒（0以上）'
         )
-
-        # backoff
         parser.add_argument(
-            '-b', '--backoff', dest='backoff', type=int, default=1,
-            help='multiplier applied to delay between attempts. default: 1 (no backoff).'
+            '-b', '--backoff', dest='backoff', type=KickerArgsParser._positive_int, default=1,
+            help='待機秒の倍率（1以上）'
         )
-
-        # jitter
         parser.add_argument(
-            '-j', '--jitter', dest='jitter', type=KickerArgsParser._type_parse, default=0,
-            help='extra seconds added to delay between attempts. default: 0.' \
-                 'fixed if a number, random if a range tuple (min, max)'
+            '-j', '--jitter', dest='jitter', type=KickerArgsParser._parse_jitter, default=0,
+            help='待機秒の揺らぎ。数値または範囲（例: "(1, 3)"）'
         )
-
-        # max_delay
         parser.add_argument(
-            '-m', '--max-delay', dest='max_delay', type=int, default=None,
-            help='the maximum value of delay. default: None (no limit).'
+            '-m', '--max-delay',
+            dest='max_delay',
+            type=KickerArgsParser._non_negative_int,
+            default=None,
+            help='最大待機秒（0以上）'
         )
 
         parsed_args = parser.parse_args(args)
-        self._exec_yaml_path = parsed_args.yaml_file
-        self._exec_date = parsed_args.exec_date
-        self._working_dir = parsed_args.working_dir
-        self._dry_run = parsed_args.dry_run
-        self._tries = parsed_args.tries
-        self._delay = parsed_args.delay
-        self._backoff = parsed_args.backoff
-        self._jitter = parsed_args.jitter
-        self._max_delay = parsed_args.max_delay
+        self._options = RunOptions(
+            yaml_file=parsed_args.yaml_file,
+            exec_date=parsed_args.exec_date,
+            dry_run=parsed_args.dry_run,
+            working_dir=parsed_args.working_dir,
+            retry=RetryOptions(
+                tries=parsed_args.tries,
+                delay=parsed_args.delay,
+                backoff=parsed_args.backoff,
+                jitter=parsed_args.jitter,
+                max_delay=parsed_args.max_delay,
+            ),
+        )
 
+    def options(self):
+        """実行設定を返す。.
+
+        Returns:
+            RunOptions: 解析済み設定。
+        """
+        return self._options
+
+    # 後方互換のため、従来アクセサを残す。
     def exec_yaml_path(self):
-        return self._exec_yaml_path
+        """実行YAMLファイルパスを返す。."""
+        return self._options.yaml_file
 
     def exec_date(self):
-        return self._exec_date
+        """実行日を返す。."""
+        return self._options.exec_date
 
     def working_dir(self):
-        return self._working_dir
+        """作業ディレクトリを返す。."""
+        return self._options.working_dir
 
     def dry_run(self):
-        return self._dry_run
+        """ドライラン有効フラグを返す。."""
+        return self._options.dry_run
 
     def tries(self):
-        return self._tries
+        """最大試行回数を返す。."""
+        return self._options.retry.tries
 
     def delay(self):
-        return self._delay
+        """初回待機秒を返す。."""
+        return self._options.retry.delay
 
     def backoff(self):
-        return self._backoff
+        """待機秒の倍率を返す。."""
+        return self._options.retry.backoff
 
     def jitter(self):
-        return self._jitter
+        """待機秒の揺らぎ設定を返す。."""
+        return self._options.retry.jitter
 
     def max_delay(self):
-        return self._max_delay
+        """最大待機秒を返す。."""
+        return self._options.retry.max_delay
 
     @staticmethod
-    def _type_parse(str_arg):
+    def _parse_exec_date(value):
+        """実行日文字列を検証する。.
+
+        Args:
+            value: 検証対象の実行日。
+
+        Returns:
+            str: 検証済み実行日。
+        """
         try:
-            any_obj = eval(str_arg)
-        except:
-            raise argparse.ArgumentTypeError('Invalid type', str_arg)
-        return any_obj
+            datetime.datetime.strptime(value, '%Y%m%d')
+        except ValueError as exc:
+            raise argparse.ArgumentTypeError(
+                'exec-date は YYYYMMDD 形式で指定してください'
+            ) from exc
+        return value
+
+    @staticmethod
+    def _parse_jitter(raw_value):
+        """Jitter 値を数値または範囲へ変換する。.
+
+        Args:
+            raw_value: CLI から受け取った文字列。
+
+        Returns:
+            JitterType: 数値または長さ2のタプル。
+        """
+        try:
+            parsed = ast.literal_eval(raw_value)
+        except (SyntaxError, ValueError):
+            try:
+                parsed = int(raw_value)
+            except ValueError as exc:
+                raise argparse.ArgumentTypeError(
+                    'jitter は数値または (1, 3) のようなタプル/リストで指定してください'
+                ) from exc
+
+        if isinstance(parsed, (int, float)):
+            return parsed
+        if isinstance(parsed, (list, tuple)) and len(parsed) == 2 and all(
+            isinstance(value, (int, float)) for value in parsed
+        ):
+            return tuple(parsed)
+        raise argparse.ArgumentTypeError(
+            'jitter は数値または (1, 3) のようなタプル/リストで指定してください'
+        )
+
+    @staticmethod
+    def _positive_int(value):
+        """1以上の整数であることを検証する。."""
+        int_value = int(value)
+        if int_value <= 0:
+            raise argparse.ArgumentTypeError('1以上の値を指定してください')
+        return int_value
+
+    @staticmethod
+    def _non_negative_int(value):
+        """0以上の整数であることを検証する。."""
+        int_value = int(value)
+        if int_value < 0:
+            raise argparse.ArgumentTypeError('0以上の値を指定してください')
+        return int_value

@@ -3,3 +3,6 @@
 .coverage
 /test/cover/
 /test/.noseids
+__pycache__/
+.pytest_cache/
+.idea/

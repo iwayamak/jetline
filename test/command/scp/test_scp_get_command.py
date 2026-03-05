@@ -1,78 +1,77 @@
-# -*- coding: utf-8 -*-
+"""ScpGetCommand のユニットテスト."""
 
 import os
-from ...abc.base_test_case import BaseTestCase
+
 from jetline.command.command_queue import CommandQueue
-from jetline.command.local.touch_file_command import TouchFileCommand
 from jetline.command.local.remove_command import RemoveCommand
+from jetline.command.local.touch_file_command import TouchFileCommand
 from jetline.command.scp.scp_get_command import ScpGetCommand
 from jetline.command.scp.scp_put_command import ScpPutCommand
 from jetline.container.container import Container
 
-TEST_DATA_PATH_LIST = \
-   [
-       os.path.join(os.path.dirname(__file__), f'test_scp_get_command_0{i}.csv') for i in range(5)
-    ]
+from ...abc.base_test_case import BaseTestCase
 
-REMOTE_DIR = '/tmp'
+TEST_DATA_PATH_LIST = [
+    os.path.join(os.path.dirname(__file__), f"test_scp_get_command_0{i}.csv") for i in range(5)
+]
+REMOTE_DIR = "/tmp"
 
 
 class TestScpGetCommand(BaseTestCase):
+    """SCP ダウンロードの単体/複数取得を検証する."""
 
     def __init__(self, *args, **kwargs):
-        self._component = \
-            Container().component('SCP_COMPONENT.ID=UT')
+        """テストケースを初期化する."""
+        self._component = Container().component("SCP_COMPONENT.ID=UT")
         super().__init__(*args, **kwargs)
 
     @classmethod
     def setUpClass(cls) -> None:
+        """取得対象ファイルをリモート側へ配置する."""
         queue = CommandQueue()
         for test_data_path in TEST_DATA_PATH_LIST:
-            queue.add_command(
-                TouchFileCommand(test_data_path)
-            )
+            queue.add_command(TouchFileCommand(test_data_path))
         queue.add_command(
             ScpPutCommand(
-                Container().component('SCP_COMPONENT.ID=UT'),
+                Container().component("SCP_COMPONENT.ID=UT"),
                 TEST_DATA_PATH_LIST,
                 REMOTE_DIR,
                 False,
-                False
+                False,
             )
         )
         queue.execute()
 
     @classmethod
     def tearDownClass(cls) -> None:
+        """ローカルの準備ファイルを削除する."""
         queue = CommandQueue()
         for test_data_path in TEST_DATA_PATH_LIST:
-            queue.add_command(
-                RemoveCommand(test_data_path)
-            )
+            queue.add_command(RemoveCommand(test_data_path))
         queue.execute()
 
-    def test_scp_get_single(self):
+    def test_scp_get_single(self) -> None:
+        """単一ファイルを取得できることを確認する."""
         object_list = []
-        command = \
-            ScpGetCommand(
-                self._component,
-                os.path.join(REMOTE_DIR, 'test_scp_get_command_00.csv'),
-                os.path.dirname(__file__),
-                False,
-                False,
-                object_list
-            )
+        command = ScpGetCommand(
+            self._component,
+            os.path.join(REMOTE_DIR, "test_scp_get_command_00.csv"),
+            os.path.dirname(__file__),
+            False,
+            False,
+            object_list,
+        )
         command.execute()
 
-    def test_scp_get_multiple(self):
+    def test_scp_get_multiple(self) -> None:
+        """ワイルドカード指定で複数ファイルを取得できることを確認する."""
         object_list = []
-        command = \
-            ScpGetCommand(
-                self._component,
-                os.path.join(REMOTE_DIR, 'test_scp_get_command_0*.csv'),
-                os.path.dirname(__file__),
-                False,
-                False,
-                object_list
-            )
+        command = ScpGetCommand(
+            self._component,
+            os.path.join(REMOTE_DIR, "test_scp_get_command_0*.csv"),
+            os.path.dirname(__file__),
+            False,
+            False,
+            object_list,
+        )
         command.execute()

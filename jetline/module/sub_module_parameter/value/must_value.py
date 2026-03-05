@@ -1,12 +1,14 @@
-# -*- coding: utf-8 -*-
+"""必須値ラッパー。."""
 
-from .abc.value import Value
 from ....exception.sub_module_parameter_error import SubModuleParameterError
+from .abc.value import Value
 
 
 class MustValue(Value):
+    """`None` を許容しない値ラッパー。."""
 
-    def __init__(self, v, display=None):
-        if v is None:
+    def __init__(self, value, display=None):
+        """必須値を初期化する。."""
+        if value is None:
             raise SubModuleParameterError("MustValue", "None")
-        super(MustValue, self).__init__(v, display)
+        super().__init__(value, display)

@@ -1,12 +1,19 @@
-from setuptools import setup
+"""setuptools ベースの互換パッケージ設定。"""
+
+from setuptools import find_packages, setup
 
 setup(
     name='jetline',
     version='2020.1',
-    packages=['jetline'],
+    packages=find_packages(include=['jetline', 'jetline.*']),
     url='',
     license='MIT',
-    author='Katsuya Iwauama',
+    author='Katsuya Iwayama',
     author_email='iwayamak@matsubabreak.com',
-    description='Application framework for ETL processing.'
+    description='Application framework for ETL processing.',
+    entry_points={
+        'console_scripts': [
+            'jetline=jetline.cli:main',
+        ]
+    }
 )

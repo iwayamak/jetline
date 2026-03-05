@@ -1,27 +1,29 @@
-# -*- coding: utf-8 -*-
+"""ScpComponent のユニットテスト。."""
 
 from jetline.container.container import Container
-from ...abc.base_test_case import BaseTestCase
+from test.abc.base_test_case import BaseTestCase
 
 
 class TestScpComponent(BaseTestCase):
+    """ScpComponent のプロパティ解決を検証する。."""
 
     def __init__(self, *args, **kwargs):
-        self._component = Container.component('SCP_COMPONENT.ID=TEST_COMPONENT')
+        """テストケースを初期化する。."""
+        self._component = Container.component("SCP_COMPONENT.ID=TEST_COMPONENT")
         super().__init__(*args, **kwargs)
 
     def test_user(self):
-        user = self._component.user
-        self.assertEqual(user, 'test_user')
+        """User が期待値であることを確認する。."""
+        self.assertEqual(self._component.user, "test_user")
 
     def test_password(self):
-        password = self._component.password
-        self.assertEqual(password, 'test_password')
+        """Password が期待値であることを確認する。."""
+        self.assertEqual(self._component.password, "test_password")
 
     def test_host(self):
-        host = self._component.host
-        self.assertEqual(host, 'test_host')
+        """Host が期待値であることを確認する。."""
+        self.assertEqual(self._component.host, "test_host")
 
     def test_port(self):
-        port = self._component.port
-        self.assertEqual(port, 22)
+        """Port が期待値であることを確認する。."""
+        self.assertEqual(self._component.port, 22)

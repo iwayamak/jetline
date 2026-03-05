@@ -1,31 +1,33 @@
-# -*- coding: utf-8 -*-
+"""PostgreSQL の汎用 SQL 実行サブモジュール."""
 
-from ...abc.sub_module import SubModule
-from ....sub_module_parameter.db.postgresql.postgresql_processing_parameter import PostgreSQLProcessingParameter
-from .....container.container import Container
 from .....command.db.postgresql.postgresql_processing_command import PostgreSQLProcessingCommand
-from .....util.file_util import FileUtil
+from ....sub_module_parameter.db.postgresql.postgresql_processing_parameter import (
+    PostgreSQLProcessingParameter,
+)
+from .abc.postgresql_sub_module import PostgreSQLSubModule
 
 
-class PostgreSQLProcessing(SubModule):
+class PostgreSQLProcessing(PostgreSQLSubModule):
+    """SQL ファイルを読み込み、PostgreSQL へ実行する."""
 
     def __init__(self, param: PostgreSQLProcessingParameter):
+        """SQL 実行サブモジュールを初期化する.
+
+        Args:
+            param: SQL 実行パラメータ.
+        """
         super().__init__(param)
 
     def run(self):
-        component = \
-            Container.component(
-                self._parameter.postgresql_component_key.get()
-            )
-        command = \
-            PostgreSQLProcessingCommand(
-                component,
-                FileUtil.file_to_str(
-                    self._parameter.sql_file_name.get(),
-                    self._parameter.input_value.get()
-                )
-            )
-        command .execute()
+        """サブモジュール処理を実行する."""
+        component = self.resolve_postgresql_component()
+        command = PostgreSQLProcessingCommand(component, self._load_sql())
+        command.execute()
+
+    def _load_sql(self) -> str:
+        """SQL ファイルを入力値で展開して読み込む."""
+        return self.load_sql_from_parameter()
 
     def tear_down(self):
+        """実行後処理を行う."""
         super().tear_down()

@@ -1,20 +1,19 @@
-# -*- coding: utf-8 -*-
-
-from abc import ABCMeta
+"""パラメータ値ラッパーの基底クラス。."""
 
 
-class Value(metaclass=ABCMeta):
+class Value:
+    """サブモジュールパラメータ値を保持する。."""
 
-    def __init__(self, v, display):
-        self._v = v
+    def __init__(self, value, display):
+        """値ラッパーを初期化する。."""
+        self._value = value
         self._display = display
 
     def get(self):
-        return self._v
+        """保持している値を返す。."""
+        return self._value
 
     @property
     def display(self):
-        if self._display is not None:
-            return self._display
-        else:
-            return ''
+        """表示名を返す。未設定時は空文字を返す。."""
+        return "" if self._display is None else self._display

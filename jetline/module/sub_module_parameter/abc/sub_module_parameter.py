@@ -1,29 +1,41 @@
-# -*- coding: utf-8 -*-
-
-from typing import Union
-from abc import ABCMeta
+"""SubModule パラメータ共通基底。."""
 
 
-class SubModuleParameter(metaclass=ABCMeta):
+class SubModuleParameter:
+    """プロパティ定義に基づいてパラメータを自動注入する基底クラス。."""
 
-    def __init__(self, params: Union[dict, None] = None):
-        if params is not None:
-            member_ls = self._value_method_name_list()
-            for member_name in member_ls:
-                if member_name in params:
-                    value = params[member_name]
-                    setattr(self, member_name, value)
-                else:
-                    setattr(self, member_name, None)
-        else:
-            member_ls = self._value_method_name_list()
-            for member_name in member_ls:
-                setattr(self, member_name, None)
+    def __init__(self, params: dict | None = None):
+        """パラメータを初期化する。.
 
-    def _value_method_name_list(self):
-        ls = []
-        member_ls = dir(self)
-        for member_name in member_ls:
-            if member_name[0] != '_':
-                ls.append(member_name)
-        return ls
+        Args:
+            params: パラメータ辞書。未指定時は各プロパティに `None` を設定する。
+
+        Raises:
+            TypeError: `params` が辞書以外の場合。
+        """
+        if params is None:
+            params = {}
+        elif not isinstance(params, dict):
+            raise TypeError('params must be a dict or None')
+
+        for field_name in self._parameter_field_names():
+            setattr(self, field_name, params.get(field_name))
+
+    @classmethod
+    def _parameter_field_names(cls) -> list[str]:
+        """パラメータとして扱うプロパティ名一覧を返す。.
+
+        継承階層を辿り、setter を持つ public property のみを対象とする。
+        """
+        field_names: list[str] = []
+        for klass in reversed(cls.__mro__):
+            for name, value in klass.__dict__.items():
+                if name.startswith('_'):
+                    continue
+                if (
+                    isinstance(value, property)
+                    and value.fset is not None
+                    and name not in field_names
+                ):
+                    field_names.append(name)
+        return field_names

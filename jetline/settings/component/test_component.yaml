@@ -7,12 +7,40 @@ POSTGRESQL_COMPONENT.ID=TEST_COMPONENT:
   host: test_host
   port: 5432
 
+POSTGRESQL_COMPONENT.ID=UT:
+  class: PostgreSQLComponent
+  database: postgres
+  schema: public
+  user: postgres
+  password: postgres
+  host: localhost
+  port: 5432
+
 SCP_COMPONENT.ID=TEST_COMPONENT:
   class: ScpComponent
   user: test_user
   password: test_password
   host: test_host
   port: 22
+
+SCP_COMPONENT.ID=UT:
+  class: ScpComponent
+  user: test_user
+  password: test_password
+  host: localhost
+  port: 22
+
+S3_COMPONENT.ID=UT:
+  class: S3Component
+  bucket: test-bucket
+  aws_access_key: dummy
+  aws_secret_access_key: dummy
+  region_name: ap-northeast-1
+
+PLUGIN_COMPONENT.ID=TEST_COMPONENT:
+  class: PluginComponent
+  param1: Param_01
+  param2: Param_02
 
 MYSQL_COMPONENT.ID=TEST_COMPONENT:
   class: MySQLComponent

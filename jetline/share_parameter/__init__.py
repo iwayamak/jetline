@@ -1,0 +1,1 @@
+"""share_parameter パッケージ。."""
