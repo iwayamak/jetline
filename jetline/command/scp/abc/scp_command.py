@@ -2,12 +2,13 @@
 
 import logging
 import shlex
+from typing import cast
 
 from paramiko import AutoAddPolicy, SSHClient
 from scp import SCPClient
 
 from ....command.abc.command import Command
-from ....container.component.abc.component import Component
+from ....container.component.scp_component import ScpComponent
 
 logger = logging.getLogger('jetline')
 
@@ -15,7 +16,7 @@ logger = logging.getLogger('jetline')
 class ScpCommand(Command):
     """SCP 転送を行うコマンド基底クラス。."""
 
-    def __init__(self, component: Component):
+    def __init__(self, component: ScpComponent):
         """SCP コマンドを初期化する。.
 
         Args:
@@ -24,6 +25,11 @@ class ScpCommand(Command):
         self.ssh: SSHClient | None = None
         self.scp: SCPClient | None = None
         super().__init__(component)
+
+    @property
+    def scp_component(self) -> ScpComponent:
+        """SCP コンポーネントを型付きで返す。"""
+        return cast(ScpComponent, self.component)
 
     def set_up(self):
         """実行前処理を行う。."""
@@ -38,10 +44,10 @@ class ScpCommand(Command):
         self.ssh = SSHClient()
         self.ssh.set_missing_host_key_policy(AutoAddPolicy())
         self.ssh.connect(
-            username=self.component.user,
-            password=self.component.password,
-            hostname=self.component.host,
-            port=self.component.port,
+            username=self.scp_component.user,
+            password=self.scp_component.password,
+            hostname=self.scp_component.host,
+            port=self.scp_component.port,
         )
         self.scp = SCPClient(self.ssh.get_transport(), sanitize=lambda x: x)
 

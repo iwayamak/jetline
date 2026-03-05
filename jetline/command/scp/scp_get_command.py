@@ -50,4 +50,4 @@ class ScpGetCommand(ScpCommand):
         remote_paths = self.list_remote_paths(self._remote_path)
         self._object_list.clear()
         self._object_list.extend(remote_paths)
-        logger.info("Get %s using SCP from %s", self._object_list, self.component.host)
+        logger.info("Get %s using SCP from %s", self._object_list, self.scp_component.host)

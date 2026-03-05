@@ -44,4 +44,4 @@ class ScpPutCommand(ScpCommand):
             recursive=self._recursive,
             preserve_times=self._preserve_times,
         )
-        logger.info("Put %s using SCP to %s", self._local_path_list, self.component.host)
+        logger.info("Put %s using SCP to %s", self._local_path_list, self.scp_component.host)

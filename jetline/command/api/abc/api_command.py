@@ -2,6 +2,7 @@
 """API 呼び出しを行うコマンド基底。."""
 
 import logging
+from typing import Any, cast
 
 import requests
 
@@ -27,11 +28,34 @@ class ApiCommand(Command):
         self._url = None
         super().__init__(component)
 
+    @property
+    def api_component(self) -> Component:
+        """API コンポーネントを返す。"""
+        return cast(Component, self.component)
+
+    @staticmethod
+    def _resolve_component_url(component: Component) -> str:
+        """コンポーネントから URL を解決する。
+
+        Args:
+            component: URL を保持する API コンポーネント。
+
+        Returns:
+            str: 接続先 URL。
+
+        Raises:
+            AttributeError: `url` 属性が存在しない場合。
+        """
+        try:
+            return cast(Any, component).url
+        except AttributeError as exc:
+            raise AttributeError("api component must have 'url' attribute") from exc
+
     def set_up(self):
         """接続先 URL を解決し、ログを出力する。."""
         logger.info(f'headers: {self._session.headers}')
 
-        self._url = self.component.url
+        self._url = self._resolve_component_url(self.api_component)
         logger.info(f'url: {self._url}')
 
         super().set_up()
